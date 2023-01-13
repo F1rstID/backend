@@ -50,7 +50,15 @@ class CommentController {
     const updatedComment = await this.commentService.updateComment(cId, comment);
 
     return res.sendStatus(201);
-  }
+  };
+
+  deleteComment = async (req, res, next) => {
+    //댓글 삭제
+    const {cId} = req.params;
+    const deletedComment = await this.commentService.deleteComment(cId);
+
+    return res.sendStatus(204);
+  };
 
 
 
