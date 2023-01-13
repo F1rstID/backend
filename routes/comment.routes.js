@@ -7,7 +7,7 @@ const commentController = new CommentController()
 
 router.post('/:qId', commentController.createComment); //댓글 생성 router
 router.get('/:qId', commentController.getAllComments); //댓글 조회 router
-// router.put('/:cId', commentController.updateComment); //댓글 수정 router
+router.put('/:cId', commentController.updateComment); //댓글 수정 router
 // router.delete('/:cId', commentController.deleteComment); //댓글 삭제 router
 
 module.exports = router

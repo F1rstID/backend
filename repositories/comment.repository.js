@@ -18,14 +18,27 @@ class CommentRepository {
     )
 
     return createCommentData;
-  }
+  };
 
   getAllComments = async (qId) => {
 
     const allComments = await this.commentsModel.findAll({qId});
 
     return allComments;
+  };
+
+  updateComment = async (cId, comment) => {
+
+    const updateCommentData = await this.commentsModel.update(
+      {comment},
+      {where : {cId}}
+    );
+
+    return updateCommentData;
+    
   }
+
+
 }
 
 module.exports = CommentRepository

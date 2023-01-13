@@ -25,13 +25,14 @@ class CommentController {
     }
 
     //* FIXME: 토큰 검증 구현후 mId 파라미터 삭제하기.
-    const {mId, qId, nickname, comment} = req.body;
+    const {mId, nickname, comment} = req.body;
+    const {qId} = req.params;
     //* 댓글 작성.
     await this.commentService.createComment(mId, qId, nickname, comment);
 
     //* Quiz 게시글 작성에 성공 하였으므로
     //* 201(Created)
-    res.sendStatus(201);
+    return res.sendStatus(201);
   };
 
   getAllComments = async (req, res, next) => {
@@ -39,9 +40,16 @@ class CommentController {
     const {qId} = req.params;
     const allComments = await this.commentService.getAllComments(qId);
 
-    console.log(allComments)
-
     return res.status(200).json({allComments});
+  };
+
+  updateComment = async (req, res, next) => {
+    //댓글 수정
+    const {cId} = req.params;
+    const {comment} = req.body;
+    const updatedComment = await this.commentService.updateComment(cId, comment);
+
+    return res.sendStatus(201);
   }
 
 
