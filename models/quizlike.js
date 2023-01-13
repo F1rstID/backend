@@ -3,42 +3,38 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class CommentLike extends Model {
+  class QuizLike extends Model {
     
     static associate(models) {
-
-      this.belongsTo(models.Comment, {
-        targetKey: 'commentIndex',
-        foreignKey: 'commentIndex',
+      
+      this.belongsTo(models.Quiz, {
+        targetKey: 'quizIndex',
+        foreignKey: 'quizIndex',
       });
     }
   }
-  CommentLike.init({
-
-    commentLikeIndex: {
+  QuizLike.init({
+    quizLikeIndex: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-
-    commentIndex: {
+    quizIndex: {
       allowNull: false,
       type: DataTypes.INTEGER,
     },
-
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
     },
-
     updatedAt: {
       allowNull: false,
       type: DataTypes.DATE,
     }
   }, {
     sequelize,
-    modelName: 'CommentLike',
+    modelName: 'QuizLike',
   });
-  return CommentLike;
+  return QuizLike;
 };

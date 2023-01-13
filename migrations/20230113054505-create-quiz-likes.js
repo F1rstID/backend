@@ -9,16 +9,23 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      quizeIndex: {
-        type: Sequelize.INTEGER
+      quizIndex: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references : {
+          model : "Quiz",
+          key : "quizIndex",
+        }
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("now")
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("now")
       }
     });
   },

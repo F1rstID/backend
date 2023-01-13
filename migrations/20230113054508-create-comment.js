@@ -10,21 +10,34 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       memberIndex: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references : {
+          model : "Member",
+          key : "memberIndex",
+        }
       },
       quizeIndex: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references : {
+          model : "Quiz",
+          key : "quizIndex",
+        }
       },
       comment: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("now")
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("now")
       }
     });
   },
