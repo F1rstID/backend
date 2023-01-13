@@ -2,7 +2,7 @@ const {
   BadRequestError, Unauthorized, Forbidden, PreconditionFailed, NotFound, InternalServerError,
 } = require('../helper/http.exception.helper');
 
-// 에러 핸들링 미들웨어
+//* Error Handling Middleware
 module.exports = ((err, req, res, next) => {
   if (err instanceof BadRequestError) return res.status(400).json({ errorMessage: err.message });
   if (err instanceof Unauthorized) return res.status(401).json({ errorMessage: err.message });
