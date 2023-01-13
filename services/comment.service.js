@@ -24,7 +24,12 @@ class CommentService {
   updateComment = async (cId, comment) => {
 
     return await this.commentRepository.updateComment(cId, comment);
-  }
+  };
+
+  deleteComment = async (cId) => {
+
+    return await this.commentRepository.deleteComment(cId);
+  };
 }
 
 module.exports = CommentService
