@@ -28,10 +28,16 @@ class QuizzesRepository {
     return createQuizData;
   };
 
-  //* Like, Dislike 구현후 수정하여 게시글의 Like의 개수와 DisLike의 개수를 받아올 것.
-  getAllQuiz = async () => {
-    const allQuizData = await this.quizzesModel.findAll();
-    return allQuizData;
+  //* FIXME: Like, Dislike 구현후 수정하여 게시글의 Like의 개수와 DisLike의 개수를 받아올 것.
+  getAllQuizzes = async () => {
+    const allQuizzesData = await this.quizzesModel.findAll();
+    return allQuizzesData;
+  };
+
+  //* FIXME: Like, Dislike 구현후 수정하여 게시글의 Like의 개수와 DisLike의 개수를 받아올 것.
+  getQuiz = async (qId) => {
+    const quizData = await this.quizzesModel.findByPk(qId);
+    return quizData;
   };
 }
 

@@ -35,8 +35,15 @@ class QuizzesController {
 
   getAllQuiz = async (req, res) => {
     //* 모든 게시글 조회.
-    const quiz = await this.quizzesService.getAllQuiz();
+    const quizzes = await this.quizzesService.getAllQuizzes();
     //* 성공시 200(OK)
+    return res.status(200).json({ quizzes });
+  };
+
+  getQuiz = async (req, res) => {
+    //* 특정한 한개의 게시글 조회.
+    const { qId } = req.params;
+    const quiz = await this.quizzesService.getQuiz(qId);
     return res.status(200).json({ quiz });
   };
 }
