@@ -13,10 +13,12 @@ class QuizzesService {
     return await this.quizzesRepository.createQuiz(mId, title, content, answer);
   };
 
+  //* FIXME: Like, Dislike 구현후 Map 으로 answer 제외시키기.
   getAllQuizzes = async () => {
     return await this.quizzesRepository.getAllQuizzes();
   };
 
+  //* FIXME: Like, Dislike 구현후 Map 으로 answer 제외시키기.
   getQuiz = async (qId) => {
     return await this.quizzesRepository.getQuiz(qId);
   };
