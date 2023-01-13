@@ -39,6 +39,13 @@ class QuizzesRepository {
     const quizData = await this.quizzesModel.findByPk(qId);
     return quizData;
   };
+
+  updateQuiz = async (qId, title, content, answer) => {
+    return await this.quizzesModel.update(
+      { title, content, answer },
+      { where: { qId } }
+    );
+  };
 }
 
 module.exports = QuizzesRepository;
