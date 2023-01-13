@@ -1,22 +1,21 @@
+require('dotenv').config();
 const express = require('express');
 const cookieParesr = require('cookie-parser');
+const indexRouter = require('./routes');
 const HttpExceptionFilter = require('./middleware/http.exception.middleware');
 const NotFoundFilter = require('./middleware/page.notfound.middleware');
-
-require('dotenv').config();
 
 const app = express();
 
 //* env 없을시 3000 포트로 설정.
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3000;
 
 //* Middleware
 app.use(express.json());
 app.use(cookieParesr());
 
-
-
-
+//* ./routes/index.js 연결
+app.use('/', indexRouter);
 
 //* HttpException Filter
 //* 컨트롤러 계층 상단에 require('express-async-errors') 해주셔야
@@ -29,4 +28,4 @@ app.use(HttpExceptionFilter);
 //* 유효하지 않은 URL에 접속을 시도 할경우 404 에러처리를 해줍니다.
 app.use(NotFoundFilter);
 
-app.listen(port, () => { });
+app.listen(port, () => {});

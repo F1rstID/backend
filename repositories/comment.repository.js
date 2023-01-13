@@ -2,14 +2,15 @@ const {Comment} = require('../models')
 
 class CommentRepository {
 
-  createComment = async (memberIndex, quizIndex, nickname, comment) => {
+  createComment = async (mId, qId, nickname, comment) => {
 
-    const createCommentData = await Comment.create(
-      {memberIndex, quizIndex, nickname, comment},
-      {where : {quizIndex}}
+      const createCommentData = await Comment.create(
+      {mId, qId, nickname, comment},
+      {where : {qId}}
     )
 
     return createCommentData;
+    
   }
 }
 

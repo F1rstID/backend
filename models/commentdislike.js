@@ -1,45 +1,42 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class CommentDislike extends Model {
-  
     static associate(models) {
-
       this.belongsTo(models.Comment, {
-        targetKey: 'commentIndex',
-        foreignKey: 'commentIndex',
+        targetKey: 'cId',
+        foreignKey: 'cId',
       });
-
     }
   }
-  CommentDislike.init({
+  CommentDislike.init(
+    {
+      cDId: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
 
-    commentDislikeIndex: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER
+      cId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
+
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
     },
-
-    commentIndex: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-    },
-
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-    },
-
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
+    {
+      sequelize,
+      modelName: 'CommentDislike',
     }
-  }, {
-    sequelize,
-    modelName: 'CommentDislike',
-  });
+  );
   return CommentDislike;
 };

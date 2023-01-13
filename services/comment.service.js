@@ -1,18 +1,17 @@
 const CommentRepository = require('../repositories/comment.repository');
 
 const error = new Error();
+error.status = 400;
 const result = {};
+
 
 class CommentService {
 
   commentRepository = new CommentRepository;
   
-  createComment = async (comment, quizIndex, memberIndex, nickname) => {
+  createComment = async (mId, qId, nickname, comment) => {
 
-    console.log(comment)
-    console.log(quizIndex)
-    console.log(memberIndex)
-    console.log(nickname)
+    console.log(mId, qId, nickname, comment)
 
     try {
 
@@ -24,16 +23,17 @@ class CommentService {
 
       }
 
-      if(!quizIndex) {
+      if(!qId) {
 
         error.status = 999;
         error.message = {errorMessage : "해당 퀴즈가 없습니다."}
         throw error;
       }
 
-      const createCommentData = await this.commentRepository.createComment(memberIndex, quizIndex, nickname, comment);
+      const createCommentData = await this.commentRepository.createComment(mId, qId, nickname, comment);
 
-      if (memberIndex !== createCommentData.memberIndex) {
+
+      if (mId !== createCommentData.mId) {
 
         error.status = 999;
         error.message = {errorMessage : "작성자가 아닙니다."}
@@ -42,8 +42,10 @@ class CommentService {
 
       result.status = 201;
       result.message = {message : "댓글 작성에 성공했습니다."}
+      return result
 
     } catch (error) {
+
 
       return error
 

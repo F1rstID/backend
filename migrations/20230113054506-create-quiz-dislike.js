@@ -3,33 +3,33 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('QuizDislikes', {
-      quizDislikeIndex: {
+      qDId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
-      quizIndex: {
+      qId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references : {
-          model : "Quizzes",
-          key : "quizIndex",
-        }
+        references: {
+          model: 'Quizzes',
+          key: 'qId',
+        },
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn("now")
+        defaultValue: Sequelize.fn('now'),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn("now")
-      }
+        defaultValue: Sequelize.fn('now'),
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('QuizDislikes');
-  }
+  },
 };

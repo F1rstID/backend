@@ -1,54 +1,52 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Member extends Model {
-    
-
     static associate(models) {
-
       this.hasMany(models.Quiz, {
-        sourceKey: 'memberIndex',
-        foreignKey: 'memberIndex', 
+        sourceKey: 'mId',
+        foreignKey: 'mId',
       });
 
       this.hasMany(models.Comment, {
-        sourceKey: 'memberIndex', 
-        foreignKey: 'memberIndex', 
+        sourceKey: 'mId',
+        foreignKey: 'mId',
       });
     }
   }
-  Member.init({
-    memberIndex: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER
+  Member.init(
+    {
+      mId: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+      memberId: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      password: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      nickname: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
     },
-    memberId: {
-      allowNull: false,
-      type: DataTypes.STRING
-    },
-    password: {
-      allowNull: false,
-      type: DataTypes.STRING
-    },
-    nickname: {
-      allowNull: false,
-      type: DataTypes.STRING
-    },
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
+    {
+      sequelize,
+      modelName: 'Member',
     }
-  }, {
-    sequelize,
-    modelName: 'Member',
-  });
+  );
   return Member;
 };
