@@ -30,7 +30,7 @@ class CommentController {
     //* 댓글 작성.
     await this.commentService.createComment(mId, qId, nickname, comment);
 
-    //* Quiz 게시글 작성에 성공 하였으므로
+   
     //* 201(Created)
     return res.sendStatus(201);
   };
