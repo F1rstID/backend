@@ -5,5 +5,6 @@ const quizzesController = new QuizzesController();
 
 router.post('/', quizzesController.createQuiz);
 router.get('/', quizzesController.getAllQuiz);
+router.get('/:qId', quizzesController.getQuiz);
 
 module.exports = router;
