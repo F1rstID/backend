@@ -1,9 +1,11 @@
 class QuizzesRepository {
   //* 의존성 주입
-  constructor(QuizzesModel, MembersModel) {
+  constructor(QuizzesModel, MembersModel, QuizDislikesModel, QuizLikesModel) {
     //* Model
     this.quizzesModel = QuizzesModel;
     this.membersModel = MembersModel;
+    this.quizDislikesModel = QuizDislikesModel;
+    this.quizLikesModel = QuizLikesModel;
   }
 
   //* nickname을 얻기 위해 사용.
@@ -24,6 +26,12 @@ class QuizzesRepository {
     });
 
     return createQuizData;
+  };
+
+  //* Like, Dislike 구현후 수정하여 게시글의 Like의 개수와 DisLike의 개수를 받아올 것.
+  getAllQuiz = async () => {
+    const allQuizData = await this.quizzesModel.findAll();
+    return allQuizData;
   };
 }
 
