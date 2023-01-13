@@ -1,9 +1,9 @@
-require('dotenv').config();
 const express = require('express');
 const cookieParesr = require('cookie-parser');
 const HttpExceptionFilter = require('./middleware/http.exception.middleware');
 const NotFoundFilter = require('./middleware/page.notfound.middleware');
 
+require('dotenv').config();
 
 const app = express();
 
