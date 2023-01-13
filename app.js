@@ -28,4 +28,6 @@ app.use(HttpExceptionFilter);
 //* 유효하지 않은 URL에 접속을 시도 할경우 404 에러처리를 해줍니다.
 app.use(NotFoundFilter);
 
-app.listen(port, () => {});
+app.listen(port, () => {
+    console.log(port, "포트로 서버가 열렸어요!");
+  });
