@@ -46,6 +46,10 @@ class QuizzesRepository {
       { where: { qId } }
     );
   };
+
+  deleteQuiz = async (qId) => {
+    return await this.quizzesModel.destroy({ where: { qId } });
+  };
 }
 
 module.exports = QuizzesRepository;
