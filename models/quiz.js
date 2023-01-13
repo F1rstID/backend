@@ -17,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: 'qId',
         foreignKey: 'qId',
       });
+
+      this.hasMany(models.Comment, {
+        sourceKey: 'qId',
+        foreignKey: 'qId',
+      });
     }
   }
   Quiz.init(

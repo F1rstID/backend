@@ -8,14 +8,19 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'mId',
       });
 
-      this.hasOne(models.QuizLike, {
+      this.belongsTo(models.Quiz, {
         targetKey: 'qId',
         foreignKey: 'qId',
       });
 
-      this.hasOne(models.QuizDislike, {
-        targetKey: 'qId',
-        foreignKey: 'qId',
+      this.hasOne(models.CommentLike, {
+        targetKey: 'cId',
+        foreignKey: 'cId',
+      });
+
+      this.hasOne(models.CommentDislike, {
+        targetKey: 'cId',
+        foreignKey: 'cId',
       });
     }
   }
@@ -33,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
 
-      quizeIndex: {
+      qId: {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
