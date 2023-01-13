@@ -3,45 +3,45 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Quizzes', {
-      quizIndex: {
+      qId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      memberIndex: {
-        allowNull : false,
         type: Sequelize.INTEGER,
-        references : {
-          model : "Members",
-          key : "memberIndex",
-        }
+      },
+      mId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Members',
+          key: 'mId',
+        },
       },
       title: {
-        allowNull : false,
-        type: Sequelize.STRING
+        allowNull: false,
+        type: Sequelize.STRING,
       },
       content: {
-        allowNull : false,
+        allowNull: false,
         type: Sequelize.STRING,
       },
       answer: {
-        allowNull : false,
+        allowNull: false,
         type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn("now")
+        defaultValue: Sequelize.fn('now'),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn("now")
-      }
+        defaultValue: Sequelize.fn('now'),
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Quizzes');
-  }
+  },
 };

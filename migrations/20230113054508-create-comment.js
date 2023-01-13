@@ -3,45 +3,45 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Comments', {
-      commentIndex: {
+      cId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
-      memberIndex: {
+      mId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references : {
-          model : "Members",
-          key : "memberIndex",
-        }
+        references: {
+          model: 'Members',
+          key: 'mId',
+        },
       },
       quizeIndex: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references : {
-          model : "Quizzes",
-          key : "quizIndex",
-        }
+        references: {
+          model: 'Quizzes',
+          key: 'qId',
+        },
       },
       comment: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn("now")
+        defaultValue: Sequelize.fn('now'),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn("now")
-      }
+        defaultValue: Sequelize.fn('now'),
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Comments');
-  }
+  },
 };
