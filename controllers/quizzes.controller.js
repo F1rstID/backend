@@ -15,7 +15,7 @@ class QuizzesController {
   quizzesService = new QuizzesService();
 
   createQuiz = async (req, res) => {
-    //* req.body의 타입이 quizSchema의 타입과 일치 하는지 검증한다.
+    //* req.body의 타입이 createQuizSchema의 타입과 일치 하는지 검증한다.
     const resultSchema = quizSchema.validate(req.body);
     //* 검증에 실패 하였을 경우
     if (resultSchema.error) {
@@ -44,7 +44,27 @@ class QuizzesController {
     //* 특정한 한개의 게시글 조회.
     const { qId } = req.params;
     const quiz = await this.quizzesService.getQuiz(qId);
+    //* 성공시 200(OK)
     return res.status(200).json({ quiz });
+  };
+
+  updateQuiz = async (req, res) => {
+    const { qId } = req.params;
+
+    //* req.body의 타입이 quizSchema의 타입과 일치 하는지 검증한다.
+    const resultSchema = quizSchema.validate(req.body);
+    //* 검증에 실패 하였을 경우
+    if (resultSchema.error) {
+      //* 지정된 타입과 맞지 않는 타입 이므로 400(Bad Request)
+      throw new BadRequestError('데이터 형식이 올바르지 않습니다.');
+    }
+
+    const { title, content, answer } = req.body;
+
+    await this.quizzesService.updateQuiz(qId, title, content, answer);
+
+    //* 201(Created)
+    res.sendStatus(201);
   };
 }
 
