@@ -18,7 +18,13 @@ class CommentRepository {
     )
 
     return createCommentData;
-    
+  }
+
+  getAllComments = async (qId) => {
+
+    const allComments = await this.commentsModel.findAll({qId});
+
+    return allComments;
   }
 }
 
