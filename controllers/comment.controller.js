@@ -34,6 +34,16 @@ class CommentController {
     res.sendStatus(201);
   };
 
+  getAllComments = async (req, res, next) => {
+    //댓글 조회
+    const {qId} = req.params;
+    const allComments = await this.commentService.getAllComments(qId);
+
+    console.log(allComments)
+
+    return res.status(200).json({allComments});
+  }
+
 
 
 }

@@ -14,7 +14,11 @@ class CommentService {
   createComment = async (mId, qId, nickname, comment) => {
     
       return  await this.commentRepository.createComment(mId, qId, nickname, comment);
+  }
 
+  getAllComments = async (qId) => {
+    
+    return await this.commentRepository.getAllComments(qId);
   }
 }
 
