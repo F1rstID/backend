@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       
       this.belongsTo(models.Member, {
-        targetKey: 'memberIdex', 
-        foreignKey: 'memberIdex', 
+        targetKey: 'memberIndex', 
+        foreignKey: 'memberIndex', 
       });
 
       this.hasOne(models.QuizDislike, {

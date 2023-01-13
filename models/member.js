@@ -9,13 +9,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
 
       this.hasMany(models.Quiz, {
-        sourceKey: 'memberId',
-        foreignKey: 'memberId', 
+        sourceKey: 'memberIndex',
+        foreignKey: 'memberIndex', 
       });
 
       this.hasMany(models.Comment, {
-        sourceKey: 'memberId', 
-        foreignKey: 'memberId', 
+        sourceKey: 'memberIndex', 
+        foreignKey: 'memberIndex', 
       });
     }
   }
