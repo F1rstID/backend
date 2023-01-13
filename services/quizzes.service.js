@@ -41,6 +41,19 @@ class QuizzesService {
       throw new NotFound('게시글이 정상적으로 수정되지 않았습니다.');
     }
   };
+
+  deleteQuiz = async (qId) => {
+    //* FIXME: 로그인 구현후 게시글 삭제의 권한체크 추가.
+    const deleteQuizData = await this.quizzesRepository.deleteQuiz(qId);
+
+    //* DB에 없는 데이터에 수정 명령을 내린 상황. 404
+    //* delete의 경우에는 수정된 내용의 개수를 배열로 반환한다.
+    //* 1개 수정시 : [ 1 ] 을 반환한다.
+    //* 0개 수정시 : [ 0 ] 을 반환한다.
+    if (deleteQuizData < 1) {
+      throw new NotFound('게시글이 정상적으로 삭제되지 않았습니다.');
+    }
+  };
 }
 
 module.exports = QuizzesService;

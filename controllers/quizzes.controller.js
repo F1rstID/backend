@@ -66,6 +66,15 @@ class QuizzesController {
     //* 201(Created)
     res.sendStatus(201);
   };
+
+  deleteQuiz = async (req, res) => {
+    const { qId } = req.params;
+
+    await this.quizzesService.deleteQuiz(qId);
+
+    //* 201(Created)
+    res.sendStatus(204);
+  };
 }
 
 module.exports = QuizzesController;
