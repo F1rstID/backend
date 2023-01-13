@@ -13,12 +13,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'qId',
       });
 
-      this.hasOne(models.QuizLike, {
+      this.hasOne(models.CommentLike, {
         targetKey: 'cId',
         foreignKey: 'cId',
       });
 
-      this.hasOne(models.QuizDislike, {
+      this.hasOne(models.CommentDislike, {
         targetKey: 'cId',
         foreignKey: 'cId',
       });

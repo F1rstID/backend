@@ -22,8 +22,6 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: 'qId',
         foreignKey: 'qId',
       });
-
-
     }
   }
   Quiz.init(
