@@ -16,12 +16,12 @@ module.exports = async (req, res, next) => {
     let refreshVerified = null;
 
     try {
-      accessVerified = jwt.verify(accessToken, process.env.SECRET_KEY);
+      accessVerified = jwt.verify(accessToken, process.env.SECRETKEY);
     } catch (error) {
       accessVerified = null;
     }
     try {
-      refreshVerified = jwt.verify(refreshToken, process.env.SECRET_KEY);
+      refreshVerified = jwt.verify(refreshToken, process.env.SECRETKEY);
     } catch (error) {
       refreshVerified = null;
     }

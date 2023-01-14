@@ -1,33 +1,42 @@
-const { User } = require('../models');
+const { Member } = require('../models');
 
-class UsersRepository {
-
-
-  findOneUser = async (userId) => {
-    const findOneUser = await User.findOne({ where: { userId } });
-
-    return findOneUser;
+class MembersRepository {
+  // memeber 가입
+  createMember = async (memberId, password, nickname) => {
+    console.log(memberId, password, nickname);
+    const createMember = await Member.create({ memberId, password, nickname });
+  
+    return createMember;
   };
-  findOneId = async (username) => {
-    const findOneId = await User.findOne({ where: { username } });
+
+  // member 가입 시 닉네임 중복확인
+  findOneNickname = async (nickname) => {
+    const findOneId = await Member.findOne({ where: { nickname } });
 
     return findOneId;
   };
-  
-  
-    createUser = async (username, password) => {
-      console.log(username,password)
-      const createUser = await User.create({ username, password });
-  
-      return createUser;
-    }
-    updateRefresh = async (refreshToken, user) => {
-      await User.update({ refreshToken }, { where: { userId: user.userId } });
-    };
 
+  // memberId 중복확인
+  findOneId = async (memberId) => {
+    const findOneId = await Member.findOne({ where: { memberId } });
 
-    
-  
-  }
-  
-  module.exports = UsersRepository;
+    return findOneId;
+  };
+
+  // 이미 로그인된 memeber 확인
+  findOneMember = async (memberId) => {
+    const findOneMember = await Member.findOne({ where: { memberId } });
+
+    return findOneMember;
+  };
+
+  // 새 리프레쉬 토큰 발급
+  updateRefresh = async (refreshToken, member) => {
+    await Member.update(
+      { refreshToken },
+      { where: { memverId: member.memberId } }
+    );
+  };
+}
+
+module.exports = MembersRepository;
