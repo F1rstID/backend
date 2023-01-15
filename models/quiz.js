@@ -8,11 +8,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'mId',
       });
 
-      this.hasOne(models.QuizDislike, {
-        sourceKey: 'qId',
-        foreignKey: 'qId',
-      });
-
       this.hasOne(models.QuizLike, {
         sourceKey: 'qId',
         foreignKey: 'qId',

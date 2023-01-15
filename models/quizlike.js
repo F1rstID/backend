@@ -21,6 +21,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
+      mId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
+      likeStatus: {
+        allowNull: false,
+        type: DataTypes.BOOLEAN,
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,

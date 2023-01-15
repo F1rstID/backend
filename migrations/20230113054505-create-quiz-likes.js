@@ -17,6 +17,18 @@ module.exports = {
           key: 'qId',
         },
       },
+      mId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Members',
+          key: 'mId',
+        },
+      },
+      likeStatus: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

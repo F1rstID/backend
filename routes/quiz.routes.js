@@ -9,4 +9,6 @@ router.get('/:qId', quizzesController.getQuiz);
 router.put('/:qId', quizzesController.updateQuiz);
 router.delete('/:qId', quizzesController.deleteQuiz);
 
+router.put('/like/:qId', quizzesController.likeEvent);
+
 module.exports = router;
