@@ -26,6 +26,6 @@ app.use(HttpExceptionFilter);
 
 //* 가장 마지막에 거치는 미들웨어 입니다.
 //* 유효하지 않은 URL에 접속을 시도 할경우 404 에러처리를 해줍니다.
-app.use(NotFoundFilter);
+// app.use(NotFoundFilter);
 
 app.listen(port, () => {});

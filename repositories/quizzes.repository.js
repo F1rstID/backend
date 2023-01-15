@@ -1,10 +1,11 @@
+const { number } = require('joi');
+
 class QuizzesRepository {
   //* 의존성 주입
-  constructor(QuizzesModel, MembersModel, QuizDislikesModel, QuizLikesModel) {
+  constructor(QuizzesModel, MembersModel, QuizLikesModel) {
     //* Model
     this.quizzesModel = QuizzesModel;
     this.membersModel = MembersModel;
-    this.quizDislikesModel = QuizDislikesModel;
     this.quizLikesModel = QuizLikesModel;
   }
 
@@ -49,6 +50,31 @@ class QuizzesRepository {
 
   deleteQuiz = async (qId) => {
     return await this.quizzesModel.destroy({ where: { qId } });
+  };
+
+  findLike = async (qId, mId) => {
+    return await this.quizLikesModel.findOne({ where: { qId, mId } });
+  };
+
+  deleteLike = async (qLId) => {
+    return await this.quizLikesModel.destroy({ where: { qLId } });
+  };
+
+  updateLike = async (qLId, likeStatus) => {
+    console.log(qLId, likeStatus);
+    return await this.quizLikesModel.update(
+      { likeStatus },
+      { where: { qLId } }
+    );
+  };
+
+  createLike = async (qId, mId, likeStatus) => {
+    const aaa = await this.quizLikesModel.create({
+      qId,
+      mId,
+      likeStatus,
+    });
+    return aaa;
   };
 }
 

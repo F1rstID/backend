@@ -1,4 +1,4 @@
-require('express-async-errors');
+// require('express-async-errors');
 const Joi = require('joi');
 const QuizzesService = require('../services/quizzes.service');
 const { BadRequestError } = require('../helper/http.exception.helper');
@@ -74,6 +74,19 @@ class QuizzesController {
 
     //* 201(Created)
     res.sendStatus(204);
+  };
+
+  likeEvent = async (req, res) => {
+    // FIXME: Login 기능 구현후 mId 삭제.
+    const mId = 1;
+    const { qId } = req.params;
+    const { likeStatus } = req.body;
+
+    //* 잘찍힘
+
+    await this.quizzesService.likeEvent(qId, mId, likeStatus);
+
+    return res.sendStatus(201);
   };
 }
 
