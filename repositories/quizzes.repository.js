@@ -71,7 +71,6 @@ class QuizzesRepository {
     return allQuizzesData;
   };
 
-  //* FIXME: Like, Dislike 구현후 수정하여 게시글의 Like의 개수와 DisLike의 개수를 받아올 것.
   getQuiz = async (qId) => {
     // const quizData = await this.quizzesModel.findByPk(qId);
     const [quizData, metaData] = await sequelize.query(
