@@ -75,15 +75,14 @@ class QuizzesRepository {
   getQuiz = async (qId) => {
     // const quizData = await this.quizzesModel.findByPk(qId);
     const [quizData, metaData] = await sequelize.query(
-      `select Quizzes.qId, Quizzes.title, Members.nickname,
+      `select Quizzes.qId, Quizzes.title, Quizzes.content, Members.nickname,
     count(case when likeStatus = 1 then 1 end) as 'like',
     count(case when likeStatus = 0 then 1 end) as 'unlike'
     from Quizzes
-    left join QuizLikes
-    on Quizzes.qId = QuizLikes.qId and Quizzes.qId = ${qId}
     left join Members
     on Quizzes.mId = Members.mId
-    group by Quizzes.qId
+    left join QuizLikes
+    on Quizzes.qId = QuizLikes.qId where Quizzes.qId = ${qId}
     `
     );
     return quizData;

@@ -45,7 +45,7 @@ class QuizzesController {
     const { qId } = req.params;
     const quiz = await this.quizzesService.getQuiz(qId);
     //* 성공시 200(OK)
-    return res.status(200).json({ quiz });
+    return res.status(200).json({ quiz: quiz[0] });
   };
 
   updateQuiz = async (req, res) => {
