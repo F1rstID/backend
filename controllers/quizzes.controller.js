@@ -78,7 +78,7 @@ class QuizzesController {
 
   likeEvent = async (req, res) => {
     // FIXME: Login 기능 구현후 mId 삭제.
-    const mId = 1;
+    const mId = 2;
     const { qId } = req.params;
     const { likeStatus } = req.body;
 
