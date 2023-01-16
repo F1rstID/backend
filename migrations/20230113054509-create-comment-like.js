@@ -17,6 +17,18 @@ module.exports = {
           key: 'cId',
         },
       },
+      mId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Members',
+          key: 'mId',
+        },
+      },
+      commentLikeStatus: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

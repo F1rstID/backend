@@ -17,7 +17,7 @@ module.exports = {
           key: 'mId',
         },
       },
-      quizeIndex: {
+      qId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
