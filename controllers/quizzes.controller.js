@@ -38,7 +38,7 @@ class QuizzesController {
     //* 모든 게시글 조회.
     const quizzes = await this.quizzesService.getAllQuizzes();
     //* 성공시 200(OK)
-    return res.status(200).json({ quizzes });
+    return res.status(200).json(quizzes);
   };
 
   getQuiz = async (req, res) => {
@@ -46,7 +46,7 @@ class QuizzesController {
     const { qId } = req.params;
     const quiz = await this.quizzesService.getQuiz(qId);
     //* 성공시 200(OK)
-    return res.status(200).json({ quiz: quiz[0] });
+    return res.status(200).json(quiz[0]);
   };
 
   updateQuiz = async (req, res) => {
