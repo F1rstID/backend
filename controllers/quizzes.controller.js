@@ -24,7 +24,8 @@ class QuizzesController {
     }
 
     //* FIXME: 토큰 검증 구현후 mId 파라미터 삭제하기.
-    const { mId, title, content, answer } = req.body;
+    const mId = 1
+    const { title, content, answer } = req.body;
     //* Quiz 게시글 작성.
     await this.quizzesService.createQuiz(mId, title, content, answer);
 
@@ -78,7 +79,7 @@ class QuizzesController {
 
   likeEvent = async (req, res) => {
     // FIXME: Login 기능 구현후 mId 삭제.
-    const mId = 2;
+    const mId = 1;
     const { qId } = req.params;
     const { likeStatus } = req.body;
 
