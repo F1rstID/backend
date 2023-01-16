@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cookieParesr = require('cookie-parser');
 const indexRouter = require('./routes');
+const cors = require('cors');
 const HttpExceptionFilter = require('./middleware/http.exception.middleware');
 const NotFoundFilter = require('./middleware/page.notfound.middleware');
 
@@ -13,6 +14,9 @@ const port = process.env.PORT || 3000;
 //* Middleware
 app.use(express.json());
 app.use(cookieParesr());
+
+//* CORS 설정.
+app.use(cors());
 
 //* ./routes/index.js 연결
 app.use('/', indexRouter);
@@ -29,5 +33,5 @@ app.use('/', indexRouter);
 // app.use(NotFoundFilter);
 
 app.listen(port, () => {
-    console.log(port, "포트로 서버가 열렸어요!");
-  });
+  console.log(port, "포트로 서버가 열렸어요!");
+});
