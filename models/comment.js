@@ -17,11 +17,6 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: 'cId',
         foreignKey: 'cId',
       });
-
-      this.hasOne(models.CommentDislike, {
-        targetKey: 'cId',
-        foreignKey: 'cId',
-      });
     }
   }
   Comment.init(
