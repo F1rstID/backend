@@ -23,6 +23,12 @@ class MembersRepository {
     return findOneId;
   };
 
+  findOnePw = async (password) => {
+    const findOnePw = await Member.findOne({ where: { password } });
+
+    return findOnePw;
+  };
+
   // 이미 로그인된 memeber 확인
   findOneMember = async (memberId) => {
     const findOneMember = await Member.findOne({ where: { memberId } });

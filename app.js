@@ -22,11 +22,11 @@ app.use('/', indexRouter);
 //* 에러처리가 가능합니다.
 
 //* 컨트롤러, 서비스 계층에서 throw 사용하면 이곳으로 와서 에러처리가 됩니다.
-app.use(HttpExceptionFilter);
+// app.use(HttpExceptionFilter);
 
 //* 가장 마지막에 거치는 미들웨어 입니다.
 //* 유효하지 않은 URL에 접속을 시도 할경우 404 에러처리를 해줍니다.
-app.use(NotFoundFilter);
+// app.use(NotFoundFilter);
 
 app.listen(port, () => {
     console.log(port, "포트로 서버가 열렸어요!");

@@ -13,16 +13,22 @@ class MembersService {
 
     const findNickname = await this.membersRepository.findOneNickname(nickname);
 
-    if (findNickname) throw new Error('이미 사용중인 닉네임입니다.');
+    if (findNickname) throw new Error('회원 가입에 실패했습니다. 아이디/닉네임 중복체크를 확인해주세요.');
       
     await this.membersRepository.createMember(memberId, password,nickname);
   };
 
   loginMember = async (memberId, password) => {
-    const member = await this.membersRepository.findOneId(memberId,password);
+    const member = await this.membersRepository.findOneId(memberId);
 
     if (!member) {
-      throw new ValidationError('아이디 또는 패스워드가 잘못되었습니다.');
+      throw new ValidationError('아이디가 잘못되었습니다.');
+    }
+
+    const memberPw = await this.membersRepository.findOnePw(password);
+
+    if (!memberPw) {
+      throw new ValidationError('패스워드가 잘못되었습니다.');
     }
 
     const accessToken = jwt.sign(
@@ -49,6 +55,14 @@ class MembersService {
       throw new ValidationError('이미 사용중인 아이디입니다.');
     }
   };
+
+  nicknameduplication = async (nickname) => {
+    const findId = await this.membersRepository.findOneNickname(nickname);
+    if (findId) {
+      throw new ValidationError('이미 사용중인 닉네임입니다.');
+    }
+  };
+
 
   confirmMember = async (memberId) => {
     const existMember = await this.membersRepository.findOneMember(memberId);

@@ -1,4 +1,4 @@
-require('express-async-errors')
+// require('express-async-errors')
 const MembersService = require('../services/members.service');
 const { InvalidParamsError } = require('../helper/http.exception.helper');
 
@@ -12,9 +12,9 @@ class MembersController {
     
     try {
       const result = joi.memberSchema.validate(req.body);
-      // console.log(result.value)
+      console.log(result.value)
       
-      if (result.error) throw new InvalidParamsError('형식에 맞게 모두 입력해주세요');
+      if (result.error) throw new InvalidParamsError('아이디와 비밀번호는 영문 대/소문자,숫자로 구성된 4글자 이상으로 조합해주세요.');
       
       const { memberId, password, nickname } = result.value;
       console.log(memberId, password, nickname);
@@ -49,9 +49,22 @@ class MembersController {
   duplication = async (req, res, next) => {
     try {
       const { memberId } = req.body;
+      console.log(memberId)
       const duplication = await this.membersService.duplication(memberId);
 
       res.status(200).json({ msg: '사용가능한 아이디 입니다.' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  nicknameduplication = async (req, res, next) => {
+    try {
+      const { nickname } = req.body;
+      console.log(nickname)
+      const nicknameduplication = await this.membersService.nicknameduplication(nickname);
+
+      res.status(200).json({ msg: '사용가능한 닉네임 입니다.' });
     } catch (error) {
       next(error);
     }

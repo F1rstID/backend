@@ -1,7 +1,7 @@
 const joi = require('joi');
 
-const check_memberId = /^[a-zA-Z0-9]{3,10}$/;
-const check_password = /^[a-zA-Z0-9]{4,30}$/;
+const check_memberId = /^[a-zA-Z0-9]{4,20}$/;
+const check_password = /^[a-zA-Z0-9]{4,20}$/;
 
 exports.memberSchema = joi.object({
     memberId: joi.string().pattern(check_memberId).required(),
