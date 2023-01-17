@@ -17,7 +17,7 @@ app.use(cookieParesr());
 
 //* CORS 설정.
 app.use(cors({
-  exposedHeaders: ['accessToken']
+  exposedHeaders: ['access_token']
 }));
 
 //* ./routes/index.js 연결

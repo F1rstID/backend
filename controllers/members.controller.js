@@ -38,7 +38,7 @@ class MembersController {
 
       console.log(member[0].nickname)
 
-      res.header('accessToken', member[1]); // Access Token을 Cookie에 전달한다.
+      res.header('access_token', member[1]); // Access Token을 Cookie에 전달한다.
       res.status(200).json({
         nickname: member[0].nickname,
       });
