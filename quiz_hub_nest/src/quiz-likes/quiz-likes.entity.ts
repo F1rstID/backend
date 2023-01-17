@@ -1,16 +1,31 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { MemberEntity } from 'src/members/members.entity';
+import { QuizEntity } from 'src/quizzes/quizzes.entity';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity({ name: 'QuizLike' })
 export class QuizLikeEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  qlid: string;
-
-  @Column({ type: 'varchar', length: 36 })
-  qid: string;
-
-  @Column({ type: 'varchar', length: 36 })
-  mid: string;
+  id: string;
 
   @Column({ type: 'boolean' })
   like: boolean;
+
+  //* Relation */
+
+  //* QuizLike | N : 1 | Quiz
+  @ManyToOne(() => QuizEntity, (quiz) => quiz.quizLikeId)
+  @JoinColumn({ name: 'quiz_id' })
+  quizEntity: QuizEntity;
+
+  //* QuizLike | N : 1 | Member
+  @ManyToOne(() => MemberEntity, (member) => member.quizLikeId)
+  @JoinColumn({ name: 'member_id' })
+  memberEntity: MemberEntity;
 }
