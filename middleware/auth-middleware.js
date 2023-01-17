@@ -5,10 +5,10 @@ const { InvalidParamsError } = require('../helper/http.exception.helper');
 
 module.exports = async (req, res, next) => {
   try {
-    const accessToken = req.cookies.accessToken;
+    const access_token = req.cookies.access_token;
     const refreshToken = req.cookies.refreshToken;
 
-    if (!accessToken || !refreshToken) {
+    if (!access_token || !refreshToken) {
       throw new InvalidParamsError('로그인 후 사용해주세요.');
     }
 
@@ -16,7 +16,7 @@ module.exports = async (req, res, next) => {
     let refreshVerified = null;
 
     try {
-      accessVerified = jwt.verify(accessToken, process.env.SECRETKEY);
+      accessVerified = jwt.verify(access_token, process.env.SECRETKEY);
     } catch (error) {
       accessVerified = null;
     }
@@ -31,7 +31,7 @@ module.exports = async (req, res, next) => {
       if (!accessVerified && !refreshVerified) {
         throw new InvalidParamsError('로그인 기한이 만료되었습니다.');
       }
-      // 2.access토큰은 만료되었지만 refresh토큰이 존재한다면 accessToken 발급
+      // 2.access토큰은 만료되었지만 refresh토큰이 존재한다면 access_token 발급
       if (!accessVerified && refreshVerified) {
         const existMember = await Member.findOne({
           where: { refreshToken: refreshToken },
@@ -41,17 +41,17 @@ module.exports = async (req, res, next) => {
           throw new InvalidParamsError('로그인 기한이 만료되었습니다.');
         }
 
-        // accessToken 발급
+        // access_token 발급
         const mId = existMember.mId;
 
-        const newAccessToken = jwt.sign({ mId }, process.env.SECRETKEY, {
+        const newaccess_token = jwt.sign({ mId }, process.env.SECRETKEY, {
           expiresIn: '1d',
         });
-        console.log(newAccessToken, 'newAccessToken 확인');
-        res.cookies('accesToken', newAccessToken);
+        console.log(newaccess_token, 'newaccess_token 확인');
+        res.cookies('accesToken', newaccess_token);
 
         return res.status(201).json({
-          accessToken: newAccessToken,
+          access_token: newaccess_token,
           refreshToken: refreshToken,
           msg: 'acceess 토큰이 재발급 되었습니다.',
         });
@@ -79,7 +79,7 @@ module.exports = async (req, res, next) => {
         res.cookies('refreshToken', newRefreshToken);
 
         return res.status(201).json({
-          accessToken: accessToken,
+          access_token: access_token,
           refreshToken: newRefreshToken,
           msg: 'refresh 토큰이 재발급 되었습니다.',
         });

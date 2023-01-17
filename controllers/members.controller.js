@@ -74,7 +74,7 @@ class MembersController {
   memberConfirm = async (req, res, next) => {
     try {
       const { mId, memberId } = res.locals.member;
-      const { accessToken } = res.locals;
+      const { access_token } = res.locals;
 
       const existMember = await this.membersService.confirmMember(mId);
 
@@ -82,7 +82,7 @@ class MembersController {
         res.status(200).json({
           ok: true,
           msg: '로그인 유저 정보 확인',
-          accessToken,
+          access_token,
           refreshToken: existMember.refreshToken,
         });
       }
