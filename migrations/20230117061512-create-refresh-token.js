@@ -10,13 +10,15 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       mId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
-      },
-      references: {
-        model: 'Members',
-        key: 'mId',
+        references: {
+          model: 'Members',
+          key: 'mId',
+        },
       },
       refreshToken: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       createdAt: {
