@@ -1,15 +1,14 @@
-require('express-async-errors');
+// require('express-async-errors');
 const Joi = require('joi');
 const QuizzesService = require('../services/quizzes.service');
 const { BadRequestError } = require('../helper/http.exception.helper');
 
 const quizSchema = Joi.object({
-  //* FIXME: 토큰 검증 구현후 mId 파라미터 삭제하기.
-  mId: Joi.number(),
   title: Joi.string().required(),
   content: Joi.string().required(),
   answer: Joi.string().required(),
 });
+
 
 class QuizzesController {
   quizzesService = new QuizzesService();
@@ -22,9 +21,8 @@ class QuizzesController {
       //* 지정된 타입과 맞지 않는 타입 이므로 400(Bad Request)
       throw new BadRequestError('데이터 형식이 올바르지 않습니다.');
     }
-
-    //* FIXME: 토큰 검증 구현후 mId 파라미터 삭제하기.
-    const { mId, title, content, answer } = req.body;
+    const mId = res.locals.mId
+    const { title, content, answer } = req.body;
     //* Quiz 게시글 작성.
     await this.quizzesService.createQuiz(mId, title, content, answer);
 
@@ -37,7 +35,7 @@ class QuizzesController {
     //* 모든 게시글 조회.
     const quizzes = await this.quizzesService.getAllQuizzes();
     //* 성공시 200(OK)
-    return res.status(200).json({ quizzes });
+    return res.status(200).json(quizzes);
   };
 
   getQuiz = async (req, res) => {
@@ -45,7 +43,7 @@ class QuizzesController {
     const { qId } = req.params;
     const quiz = await this.quizzesService.getQuiz(qId);
     //* 성공시 200(OK)
-    return res.status(200).json({ quiz: quiz[0] });
+    return res.status(200).json(quiz[0]);
   };
 
   updateQuiz = async (req, res) => {
@@ -77,8 +75,7 @@ class QuizzesController {
   };
 
   likeEvent = async (req, res) => {
-    // FIXME: Login 기능 구현후 mId 삭제.
-    const mId = 2;
+    const mId = res.locals.mId
     const { qId } = req.params;
     const { likeStatus } = req.body;
 
