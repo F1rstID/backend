@@ -31,7 +31,7 @@ class MembersService {
       throw new ValidationError('패스워드가 잘못되었습니다.');
     }
 
-    const accessToken = jwt.sign(
+    const access_token = jwt.sign(
       { mId: member.mId },
       process.env.SECRETKEY,
       { expiresIn: '1d' }
@@ -44,7 +44,7 @@ class MembersService {
 
     await this.membersRepository.updateRefresh(refreshToken, member);
 
-    return [member, accessToken];
+    return [member, access_token];
   };
 
   duplication = async (memberId) => {
