@@ -1,41 +1,27 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Member extends Model {
+  class Cart extends Model {
     static associate(models) {
-      this.hasMany(models.Quiz, {
-        sourceKey: 'mId',
-        foreignKey: 'mId',
-      });
-
-      this.hasMany(models.Comment, {
-        sourceKey: 'mId',
-        foreignKey: 'mId',
-      });
-
-      this.hasMany(models.RefreshToken, {
-        sourceKey: 'mId',
+      this.belongsTo(models.Member, {
+        targetKey: 'mId',
         foreignKey: 'mId',
       });
     }
   }
-  Member.init(
+  Cart.init(
     {
-      mId: {
+      tId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      memberId: {
+      mId: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
       },
-      password: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
-      nickname: {
+      refreshToken: {
         allowNull: false,
         type: DataTypes.STRING,
       },
@@ -50,8 +36,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Member',
+      modelName: 'RefreshToken',
     }
   );
-  return Member;
+  return RefreshToken;
 };

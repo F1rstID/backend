@@ -9,13 +9,13 @@ class MembersController {
     this.membersService = new MembersService();
   }
   memberJoin = async (req, res, next) => {
-    
+
     try {
       const result = joi.memberSchema.validate(req.body);
       console.log(result.value)
-      
+
       if (result.error) throw new InvalidParamsError('아이디와 비밀번호는 영문 대/소문자,숫자로 구성된 4글자 이상으로 조합해주세요.');
-      
+
       const { memberId, password, nickname } = result.value;
       console.log(memberId, password, nickname);
       const createMember = await this.membersService.createMember(
@@ -36,10 +36,9 @@ class MembersController {
 
       const member = await this.membersService.loginMember(memberId, password);
 
-      res.cookie('accessToken', member[1]); // Access Token을 Cookie에 전달한다.
-      res.cookie('refreshToken', member[2]);
+      res.header('accessToken', member[1]); // Access Token을 Cookie에 전달한다.
       res.status(200).json({
-        msg: '로그인에 성공하였습니다.',
+        message: '로그인에 성공하였습니다.',
       });
     } catch (error) {
       next(error);
