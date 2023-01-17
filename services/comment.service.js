@@ -14,7 +14,13 @@ class CommentService {
   };
 
   getAllComments = async (qId) => {
-    return await this.commentRepository.getAllComments(qId);
+    const allComments = await this.commentRepository.getAllComments(qId);
+
+    allComments.sort((a, b) => {
+      return b.createdAt - a.createdAt;
+    });
+
+    return allComments;
   };
 
   updateComment = async (cId, comment) => {

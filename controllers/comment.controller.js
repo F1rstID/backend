@@ -1,4 +1,3 @@
-// const {memberIdex} =require('../middleware') //미들웨어 가져오기
 require('express-async-errors');
 const CommentService = require('../services/comment.service');
 const { BadRequestError } = require('../helper/http.exception.helper');
@@ -24,14 +23,12 @@ class CommentController {
       throw new BadRequestError('데이터 형식이 올바르지 않습니다.');
     }
 
-    //* FIXME: 토큰 검증 구현후 mId 파라미터 삭제하기.
-    const { mId, nickname, comment } = req.body;
+    const { mId, nickname } = res.locals.member;
+    const { comment } = req.body;
     const { qId } = req.params;
     //* 댓글 작성.
     await this.commentService.createComment(mId, qId, nickname, comment);
 
-    //* Quiz 게시글 작성에 성공 하였으므로
-    //* 201(Created)
     return res.sendStatus(201);
   };
 

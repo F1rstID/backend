@@ -92,6 +92,7 @@ module.exports = async (req, res, next) => {
           attributes: ['mId', 'memberId'],
         }).then((member) => {
           res.locals.member = member;
+          console.log(member)
           next();
         });
       }
