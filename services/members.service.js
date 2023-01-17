@@ -32,7 +32,7 @@ class MembersService {
     }
 
     const accessToken = jwt.sign(
-      { memberId: member.mId },
+      { mId: member.mId },
       process.env.SECRETKEY,
       { expiresIn: '1d' }
     );

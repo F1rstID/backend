@@ -10,18 +10,18 @@ class QuizzesService {
     return await this.quizzesRepository.createQuiz(mId, title, content, answer);
   };
 
-  
+
   getAllQuizzes = async () => {
     return await this.quizzesRepository.getAllQuizzes();
   };
 
-  
+
   getQuiz = async (qId) => {
     return await this.quizzesRepository.getQuiz(qId);
   };
 
   updateQuiz = async (qId, title, content, answer) => {
-    
+
     const updateQuizData = await this.quizzesRepository.updateQuiz(
       qId,
       title,

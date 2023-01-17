@@ -11,8 +11,11 @@ function verifyToken(accessToken) {
   }
 }
 
-module.exports = async (res, req, next) => {
-  const { accessToken } = req.headers;
+module.exports = async (req, res, next) => {
+  const accessToken = req.header('accessToken')
+  console.log(accessToken)
+  const decodedAccessToken = jwt.decode(accessToken)
+  console.log(decodedAccessToken)
   //* Client 에서 accessToken 과 함께. API 요청이 들어옴.
   //* token이 들어오지 않을경우.
   //* 에러처리.
@@ -26,12 +29,13 @@ module.exports = async (res, req, next) => {
     //* 분기 1. token의 검증에 성공했을경우.
     //* next()를 이용하여 API 비지니스 로직으로 이동.
     //* 분기 1 끝.
+    res.locals.mId = decodedAccessToken.mId
     next()
     return
   }
   //* 분기 2. token의 검증에 실패 했을경우.
 
-  const decodedAccessToken = jwt.decode(accessToken)
+
   //* token을 decode 하여 memberId를 받아옴.
 
 
@@ -43,6 +47,7 @@ module.exports = async (res, req, next) => {
   if (verifyToken(refreshToken)) {
     const newAccessToken = jwt.sign({ mId: decodedAccessToken.mId }, process.env.SECRETKEY, { expiresIn: '1d' })
     res.header('accessToken', newAccessToken)
+    res.locals.mId = decodedAccessToken.mId
     next()
     return
   }
