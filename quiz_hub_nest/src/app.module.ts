@@ -7,8 +7,6 @@ import { MemberEntity } from './members/members.entity';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { MembersModule } from './members/members.module';
 import { QuizzesModule } from './quizzes/quizzes.module';
 import { TokensModule } from './tokens/tokens.module';
@@ -56,7 +54,7 @@ const typeOrmModuleOptions = {
     QuizLikesModule,
     CommentLikesModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

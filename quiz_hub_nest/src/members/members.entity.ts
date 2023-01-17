@@ -1,3 +1,4 @@
+import { IsString, IsNotEmpty } from 'class-validator';
 import { QuizEntity } from './../quizzes/quizzes.entity';
 import {
   BaseEntity,
@@ -9,18 +10,26 @@ import {
 import { CommentEntity } from 'src/comments/comments.entity';
 import { QuizLikeEntity } from 'src/quiz-likes/quiz-likes.entity';
 import { CommentLikeEntity } from 'src/comment-likes/comment-likes.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity({ name: 'Member' })
 export class MemberEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @IsString()
+  @IsNotEmpty({ message: 'ID를 작성해주세요.' })
   @Column({ type: 'varchar', length: 32 })
   memberId: string;
 
+  @IsString()
+  @IsNotEmpty({ message: 'Password를 입력해주세요.' })
+  @Exclude()
   @Column({ type: 'varchar', length: 32 })
   password: string;
 
+  @IsString()
+  @IsNotEmpty({ message: 'Nickname을 입력해주세요.' })
   @Column({ type: 'varchar', length: 32 })
   nickname: string;
 
