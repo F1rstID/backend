@@ -12,6 +12,10 @@ module.exports = {
       mId: {
         type: Sequelize.INTEGER,
       },
+      references: {
+        model: 'Members',
+        key: 'mId',
+      },
       refreshToken: {
         type: Sequelize.STRING,
       },
