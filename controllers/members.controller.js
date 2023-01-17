@@ -38,7 +38,7 @@ class MembersController {
 
 
 
-      res.header('Authorization', member[1]); // Access Token을 Cookie에 전달한다.
+      res.header('Authorization', `Bearer ${member[1]}`); // Access Token을 Cookie에 전달한다.
       res.status(200).json({
         nickname: member[0].nickname,
       });
