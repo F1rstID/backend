@@ -16,7 +16,9 @@ app.use(express.json());
 app.use(cookieParesr());
 
 //* CORS 설정.
-app.use(cors());
+app.use(cors({
+  exposedHeaders: ['accessToken']
+}));
 
 //* ./routes/index.js 연결
 app.use('/', indexRouter);
