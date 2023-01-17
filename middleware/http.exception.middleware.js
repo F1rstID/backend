@@ -1,5 +1,5 @@
 const {
-  BadRequestError, Unauthorized, Forbidden, PreconditionFailed, NotFound, InternalServerError,
+  BadRequestError, Unauthorized, Forbidden, PreconditionFailed, NotFound, InternalServerError, InvalidParamsError, ValidationError
 } = require('../helper/http.exception.helper');
 
 //* Error Handling Middleware
@@ -12,6 +12,7 @@ module.exports = ((err, req, res, next) => {
   if (err instanceof InternalServerError) {
     return res.status(500).json({ errorMessage: err.message });
   }
-
+  if (err instanceof InvalidParamsError) return res.status(409).json({ errorMessage: err.message });
+  if (err instanceof ValidationError) return res.status(409).json({ errorMessage: err.message });
   next();
 });

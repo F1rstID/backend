@@ -1,4 +1,4 @@
-// require('express-async-errors')
+require('express-async-errors')
 const MembersService = require('../services/members.service');
 const { InvalidParamsError } = require('../helper/http.exception.helper');
 
@@ -38,7 +38,7 @@ class MembersController {
 
       console.log(member[0].nickname)
 
-      res.header('accessToken', member[1]); // Access Token을 Cookie에 전달한다.
+      res.header('access_token', member[1]); // Access Token을 Cookie에 전달한다.
       res.status(200).json({
         nickname: member[0].nickname,
       });
@@ -74,7 +74,7 @@ class MembersController {
   memberConfirm = async (req, res, next) => {
     try {
       const { mId, memberId } = res.locals.member;
-      const { accessToken } = res.locals;
+      const { access_token } = res.locals;
 
       const existMember = await this.membersService.confirmMember(mId);
 
@@ -82,7 +82,7 @@ class MembersController {
         res.status(200).json({
           ok: true,
           msg: '로그인 유저 정보 확인',
-          accessToken,
+          access_token,
           refreshToken: existMember.refreshToken,
         });
       }
