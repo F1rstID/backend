@@ -17,7 +17,7 @@ class MembersController {
       if (result.error) throw new InvalidParamsError('아이디와 비밀번호는 영문 대/소문자,숫자로 구성된 4글자 이상으로 조합해주세요.');
 
       const { memberId, password, nickname } = result.value;
-  
+
       const createMember = await this.membersService.createMember(
         memberId,
         password,
@@ -38,7 +38,7 @@ class MembersController {
 
 
 
-      res.header('access_token', member[1]); // Access Token을 Cookie에 전달한다.
+      res.header('Authorization', member[1]); // Access Token을 Cookie에 전달한다.
       res.status(200).json({
         nickname: member[0].nickname,
       });
