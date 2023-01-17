@@ -9,7 +9,6 @@ const quizSchema = Joi.object({
   answer: Joi.string().required(),
 });
 
-
 class QuizzesController {
   quizzesService = new QuizzesService();
 
@@ -21,7 +20,7 @@ class QuizzesController {
       //* 지정된 타입과 맞지 않는 타입 이므로 400(Bad Request)
       throw new BadRequestError('데이터 형식이 올바르지 않습니다.');
     }
-    const mId = res.locals.mId
+    const mId = res.locals.mId;
     const { title, content, answer } = req.body;
     //* Quiz 게시글 작성.
     await this.quizzesService.createQuiz(mId, title, content, answer);
@@ -75,7 +74,7 @@ class QuizzesController {
   };
 
   likeEvent = async (req, res) => {
-    const mId = res.locals.mId
+    const mId = res.locals.mId;
     const { qId } = req.params;
     const { likeStatus } = req.body;
 
