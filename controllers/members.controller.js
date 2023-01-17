@@ -36,9 +36,11 @@ class MembersController {
 
       const member = await this.membersService.loginMember(memberId, password);
 
+      console.log(member[0].nickname)
+
       res.header('accessToken', member[1]); // Access Token을 Cookie에 전달한다.
       res.status(200).json({
-        message: '로그인에 성공하였습니다.',
+        nickname: member[0].nickname,
       });
     } catch (error) {
       next(error);
