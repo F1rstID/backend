@@ -14,8 +14,8 @@ class MembersService {
     const findNickname = await this.membersRepository.findOneNickname(nickname);
 
     if (findNickname) throw new Error('회원 가입에 실패했습니다. 아이디/닉네임 중복체크를 확인해주세요.');
-      
-    await this.membersRepository.createMember(memberId, password,nickname);
+
+    await this.membersRepository.createMember(memberId, password, nickname);
   };
 
   loginMember = async (memberId, password) => {
@@ -32,21 +32,19 @@ class MembersService {
     }
 
     const accessToken = jwt.sign(
-      { memberId: member.memberId },
+      { mId: member.mId },
       process.env.SECRETKEY,
       { expiresIn: '1d' }
     );
     const refreshToken = jwt.sign(
-      { memberId: member.memberId },
+      {},
       process.env.SECRETKEY,
       { expiresIn: '21d' }
     );
-    console.log(accessToken, 'access토큰 확인');
-    console.log(refreshToken, 'refresh토큰 확인');
 
     await this.membersRepository.updateRefresh(refreshToken, member);
 
-    return [member, accessToken, refreshToken];
+    return [member, accessToken];
   };
 
   duplication = async (memberId) => {

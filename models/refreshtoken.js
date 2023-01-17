@@ -1,7 +1,7 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Cart extends Model {
+  class RefreshToken extends Model {
     static associate(models) {
       this.belongsTo(models.Member, {
         targetKey: 'mId',
@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  Cart.init(
+  RefreshToken.init(
     {
       tId: {
         allowNull: false,
