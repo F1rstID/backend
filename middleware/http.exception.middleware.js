@@ -1,5 +1,5 @@
 const {
-  BadRequestError, Unauthorized, Forbidden, PreconditionFailed, NotFound, InternalServerError,
+  BadRequestError, Unauthorized, Forbidden, PreconditionFailed, NotFound, InternalServerError, InvalidParamsError, ValidationError
 } = require('../helper/http.exception.helper');
 
 //* Error Handling Middleware
