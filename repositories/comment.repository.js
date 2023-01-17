@@ -9,9 +9,9 @@ class CommentRepository {
   }
 
   //댓글 DB에 생성
-  createComment = async (mId, qId, nickname, comment) => {
+  createComment = async (mId, qId, comment) => {
     const createCommentData = await this.commentsModel.create(
-      { mId, qId, nickname, comment },
+      { mId, qId, comment },
       { where: { qId } }
     );
 
@@ -19,7 +19,10 @@ class CommentRepository {
   };
 
   getAllComments = async (qId) => {
-    const allComments = await this.commentsModel.findAll({ qId });
+    const allComments = await this.commentsModel.findAll({
+      qId,
+      oder: [['createdAt', 'DESC']],
+    });
 
     return allComments;
   };

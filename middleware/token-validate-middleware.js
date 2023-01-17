@@ -16,7 +16,7 @@ function verifyToken(access_token) {
 
 module.exports = async (req, res, next) => {
   const access_token = req.header('access_token');
-  console.log('잉' + access_token);
+  console.log(access_token);
   const decodedaccess_token = jwt.decode(access_token);
   console.log(decodedaccess_token);
   //* Client 에서 access_token 과 함께. API 요청이 들어옴.

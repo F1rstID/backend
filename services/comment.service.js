@@ -1,34 +1,35 @@
 const CommentRepository = require('../repositories/comment.repository');
 const { Comment, Quiz, Member, CommentLike } = require('../models');
+const { NotFound } = require('../helper/http.exception.helper');
 
 class CommentService {
   commentRepository = new CommentRepository(Comment, Quiz, Member, CommentLike);
 
-  createComment = async (mId, qId, nickname, comment) => {
-    return await this.commentRepository.createComment(
-      mId,
-      qId,
-      nickname,
-      comment
-    );
+  createComment = async (mId, qId, comment) => {
+    return await this.commentRepository.createComment(mId, qId, comment);
   };
 
   getAllComments = async (qId) => {
-    const allComments = await this.commentRepository.getAllComments(qId);
-
-    allComments.sort((a, b) => {
-      return b.createdAt - a.createdAt;
-    });
-
-    return allComments;
+    return await this.commentRepository.getAllComments(qId);
   };
 
   updateComment = async (cId, comment) => {
-    return await this.commentRepository.updateComment(cId, comment);
+    const updateCommentData = await this.commentRepository.updateComment(
+      cId,
+      comment
+    );
+
+    if (updateCommentData < 1) {
+      throw new NotFound('댓글이 정상적으로 수정되지 않았습니다.');
+    }
   };
 
   deleteComment = async (cId) => {
-    return await this.commentRepository.deleteComment(cId);
+    const deleteCommentData = await this.commentRepository.deleteComment(cId);
+
+    if (deleteCommentData < 1) {
+      throw new NotFound('댓글이 정상적으로 삭제되지 않았습니다.');
+    }
   };
 
   commentLikeEvent = async (cId, mId, commentLikeStatus) => {

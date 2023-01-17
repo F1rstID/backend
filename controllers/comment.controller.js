@@ -5,9 +5,6 @@ const Joi = require('joi');
 
 const commentSchema = Joi.object({
   //* FIXME: 토큰 검증 구현후 mId 파라미터 삭제하기.
-  mId: Joi.number(),
-  qId: Joi.number(),
-  nickname: Joi.string().required(),
   comment: Joi.string().required(),
 });
 
@@ -23,11 +20,11 @@ class CommentController {
       throw new BadRequestError('데이터 형식이 올바르지 않습니다.');
     }
 
-    const { mId } = res.locals.mId;
+    const mId = res.locals.mId;
     const { comment } = req.body;
     const { qId } = req.params;
     //* 댓글 작성.
-    await this.commentService.createComment(mId, qId, nickname, comment);
+    await this.commentService.createComment(mId, qId, comment);
 
     return res.sendStatus(201);
   };
