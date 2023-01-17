@@ -23,7 +23,7 @@ class CommentController {
       throw new BadRequestError('데이터 형식이 올바르지 않습니다.');
     }
 
-    const { mId, nickname } = res.locals.member;
+    const { mId } = res.locals.mId;
     const { comment } = req.body;
     const { qId } = req.params;
     //* 댓글 작성.

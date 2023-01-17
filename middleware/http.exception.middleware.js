@@ -5,6 +5,8 @@ const {
   PreconditionFailed,
   NotFound,
   InternalServerError,
+  InvalidParamsError,
+  ValidationError,
 } = require('../helper/http.exception.helper');
 
 //* Error Handling Middleware
