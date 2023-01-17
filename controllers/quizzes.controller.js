@@ -1,4 +1,4 @@
-// require('express-async-errors');
+require('express-async-errors');
 const Joi = require('joi');
 const QuizzesService = require('../services/quizzes.service');
 const { BadRequestError } = require('../helper/http.exception.helper');

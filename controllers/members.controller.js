@@ -1,4 +1,4 @@
-// require('express-async-errors')
+require('express-async-errors')
 const MembersService = require('../services/members.service');
 const { InvalidParamsError } = require('../helper/http.exception.helper');
 
