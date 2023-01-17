@@ -12,12 +12,12 @@ class MembersController {
 
     try {
       const result = joi.memberSchema.validate(req.body);
-      console.log(result.value)
+
 
       if (result.error) throw new InvalidParamsError('아이디와 비밀번호는 영문 대/소문자,숫자로 구성된 4글자 이상으로 조합해주세요.');
 
       const { memberId, password, nickname } = result.value;
-      console.log(memberId, password, nickname);
+  
       const createMember = await this.membersService.createMember(
         memberId,
         password,
@@ -36,7 +36,7 @@ class MembersController {
 
       const member = await this.membersService.loginMember(memberId, password);
 
-      console.log(member[0].nickname)
+
 
       res.header('access_token', member[1]); // Access Token을 Cookie에 전달한다.
       res.status(200).json({
@@ -50,7 +50,6 @@ class MembersController {
   duplication = async (req, res, next) => {
     try {
       const { memberId } = req.body;
-      console.log(memberId)
       const duplication = await this.membersService.duplication(memberId);
 
       res.status(200).json({ msg: '사용가능한 아이디 입니다.' });
@@ -62,7 +61,6 @@ class MembersController {
   nicknameduplication = async (req, res, next) => {
     try {
       const { nickname } = req.body;
-      console.log(nickname)
       const nicknameduplication = await this.membersService.nicknameduplication(nickname);
 
       res.status(200).json({ msg: '사용가능한 닉네임 입니다.' });

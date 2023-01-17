@@ -15,24 +15,25 @@ function verifyToken(access_token) {
 }
 
 module.exports = async (req, res, next) => {
-  const access_token = req.header('access_token');
-  console.log(access_token);
-  const decodedaccess_token = jwt.decode(access_token);
-  console.log(decodedaccess_token);
+  const access_token = req.header('Authorization');
+
+  if (!access_token) throw new Unauthorized('');
+
+  const authToken = access_token.split(' ')[1]
+  const decodedAccessToken = jwt.decode(authToken);
   //* Client 에서 access_token 과 함께. API 요청이 들어옴.
   //* token이 들어오지 않을경우.
   //* 에러처리.
 
-  if (!access_token) throw new BadRequestError('');
   //* token이 들어온경우.
   //* token을 검증 해서 분기처리를 해줘야함.
-  const validateaccess_token = verifyToken(access_token);
+  const validateAcessToken = verifyToken(authToken);
 
-  if (validateaccess_token) {
+  if (validateAcessToken) {
     //* 분기 1. token의 검증에 성공했을경우.
     //* next()를 이용하여 API 비지니스 로직으로 이동.
     //* 분기 1 끝.
-    res.locals.mId = decodedaccess_token.mId;
+    res.locals.mId = decodedAccessToken.mId;
     next();
     return;
   }
@@ -42,24 +43,24 @@ module.exports = async (req, res, next) => {
 
   //* memberId를 이용하여 데이터 베이스의 token 테이블에서 refreshToken이 존재하는지 확인함.
   const findRefreshToken = await RefreshToken.findOne({
-    where: { mId: decodedaccess_token.mId },
+    where: { mId: decodedAccessToken.mId },
   });
   const refreshToken = findRefreshToken ? findRefreshToken.refreshToken : false;
 
   //* 변수를 만들어서 refreshToken이 존재할 경우에 refreshToken을 담아두고 존재하지 않을경우 false를 담아줌.
   if (verifyToken(refreshToken)) {
-    const newaccess_token = jwt.sign(
-      { mId: decodedaccess_token.mId },
+    const newAccessToken = jwt.sign(
+      { mId: decodedAccessToken.mId },
       process.env.SECRETKEY,
       { expiresIn: '1d' }
     );
-    res.header('access_token', newaccess_token);
-    res.locals.mId = decodedaccess_token.mId;
+    res.header('Authorization', `Bearer ${newAccessToken}`);
+    res.locals.mId = decodedAccessToken.mId;
     next();
     return;
   }
 
-  throw new Unauthorized('토큰이 만료었습니다.');
+  throw new Unauthorized('');
 };
 
 //* 분기 2-1. refreshToken을 담은 변수의 검증에 성공했을경우.

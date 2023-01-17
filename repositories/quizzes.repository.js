@@ -18,6 +18,11 @@ class QuizzesRepository {
     return memberData;
   };
 
+  findMemberIdByQuizId = async (qId) => {
+    const quizData = await this.quizzesModel.findByPk(qId)
+    return quizData
+  }
+
   //* 퀴즈 데이터 DB에 생성하기.
   createQuiz = async (mId, title, content, answer) => {
     const createQuizData = await this.quizzesModel.create({
@@ -98,6 +103,12 @@ class QuizzesRepository {
     return await this.quizzesModel.destroy({ where: { qId } });
   };
 
+  getQuizAnswer = async (qId) => {
+    const quizData = await this.quizzesModel.findByPk(qId)
+
+    return quizData
+  }
+
   findLike = async (qId, mId) => {
     return await this.quizLikesModel.findOne({ where: { qId, mId } });
   };
@@ -107,7 +118,6 @@ class QuizzesRepository {
   };
 
   updateLike = async (qLId, likeStatus) => {
-    console.log(qLId, likeStatus);
     return await this.quizLikesModel.update(
       { likeStatus },
       { where: { qLId } }
@@ -115,13 +125,14 @@ class QuizzesRepository {
   };
 
   createLike = async (qId, mId, likeStatus) => {
-    const aaa = await this.quizLikesModel.create({
+    const createLikeData = await this.quizLikesModel.create({
       qId,
       mId,
       likeStatus,
     });
-    return aaa;
+    return createLikeData;
   };
+
 }
 
 module.exports = QuizzesRepository;
