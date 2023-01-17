@@ -1,8 +1,12 @@
+import { CommentLikeEntity } from './comment-likes/comment-likes.entity';
+import { QuizLikeEntity } from './quiz-likes/quiz-likes.entity';
+import { QuizEntity } from './quizzes/quizzes.entity';
+import { CommentEntity } from './comments/comments.entity';
+import { TokenEntity } from './tokens/tokens.entity';
 import { MemberEntity } from './members/members.entity';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { SnakeNamingStrategy } from 'typeorm-snake-naming-strategy';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MembersModule } from './members/members.module';
@@ -23,7 +27,14 @@ const typeOrmModuleOptions = {
     username: configService.get('DB_USERNAME'),
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_DATABASE_NAME'),
-    entities: [MemberEntity],
+    entities: [
+      MemberEntity,
+      TokenEntity,
+      CommentEntity,
+      QuizEntity,
+      QuizLikeEntity,
+      CommentLikeEntity,
+    ],
     synchronize: true, // FIXME: 배포시 false 할것.
     autoLoadEntities: true,
     logging: true,
