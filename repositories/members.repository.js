@@ -3,7 +3,6 @@ const { Member } = require('../models');
 class MembersRepository {
   // memeber 가입
   createMember = async (memberId, password, nickname) => {
-    console.log(memberId, password, nickname);
     const createMember = await Member.create({ memberId, password, nickname });
   
     return createMember;
