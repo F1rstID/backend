@@ -8,8 +8,17 @@ const NotFoundFilter = require('./middleware/page.notfound.middleware');
 const http = require('http');
 const https = require('https')
 const http2 = require('http2')
+const fs = require('fs')
 
-const app = express();
+const app = http2Express(express);
+
+//* http2 설정을 위한 Option 설정
+const options = {
+  ca: fs.readFileSync('/etc/letsencrypt/live/f1rstweb.shop/fullchain.pem'),
+  key: fs.readFileSync('/etc/letsencrypt/live/f1rstweb.shop/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/f1rstweb.shop/cert.pem'),
+  allowHTTP1: true,
+};
 
 //* 인증서 발급을 위한 설정
 app.use(express.static('public'))
@@ -46,3 +55,7 @@ app.use(NotFoundFilter);
 // });
 
 http.createServer(app).listen(3000);
+
+http2.createSecureServer(options, app).listen(4000, () => {
+
+})
