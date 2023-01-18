@@ -11,6 +11,9 @@ const http2 = require('http2')
 
 const app = express();
 
+//* 인증서 발급을 위한 설정
+app.use(express.static('public'))
+
 //* env 없을시 3000 포트로 설정.
 const port = process.env.PORT || 3000;
 
