@@ -1,3 +1,4 @@
+import { IsNotEmpty, IsString } from 'class-validator';
 import { CommentEntity } from 'src/comments/comments.entity';
 import { MemberEntity } from 'src/members/members.entity';
 import {
@@ -16,6 +17,16 @@ export class CommentLikeEntity extends BaseEntity {
 
   @Column({ type: 'boolean' })
   like: boolean;
+
+  @IsString()
+  @IsNotEmpty()
+  @Column({ type: 'uuid' })
+  member_id: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Column({ type: 'uuid' })
+  comment_id: string;
 
   //* Relation */
 

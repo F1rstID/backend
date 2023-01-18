@@ -7,6 +7,7 @@ import {
   OneToOne,
   JoinColumn,
 } from 'typeorm';
+import { IsString, IsNotEmpty } from 'class-validator';
 
 @Entity({ name: 'Token' })
 export class TokenEntity extends BaseEntity {
@@ -15,6 +16,11 @@ export class TokenEntity extends BaseEntity {
 
   @Column({ type: 'text' })
   token: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Column({ type: 'uuid' })
+  member_id: string;
 
   //* Relation */
 

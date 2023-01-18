@@ -25,7 +25,7 @@ export class MemberEntity extends BaseEntity {
   @IsString()
   @IsNotEmpty({ message: 'Password를 입력해주세요.' })
   @Exclude()
-  @Column({ type: 'varchar', length: 32 })
+  @Column({ type: 'varchar', length: 100 })
   password: string;
 
   @IsString()
@@ -36,7 +36,9 @@ export class MemberEntity extends BaseEntity {
   //* Relation */
 
   //* Member | 1 : N | Quiz
-  @OneToMany(() => QuizEntity, (quiz) => quiz.id)
+  @OneToMany(() => QuizEntity, (quiz) => quiz.id, {
+    cascade: true,
+  })
   quizId: QuizEntity[];
 
   //* Member | 1 : N | Comment

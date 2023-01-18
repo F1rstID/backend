@@ -1,3 +1,4 @@
+import { IsNotEmpty, IsString } from 'class-validator';
 import { MemberEntity } from 'src/members/members.entity';
 import { QuizEntity } from 'src/quizzes/quizzes.entity';
 import {
@@ -16,6 +17,16 @@ export class QuizLikeEntity extends BaseEntity {
 
   @Column({ type: 'boolean' })
   like: boolean;
+
+  @IsString()
+  @IsNotEmpty()
+  @Column({ type: 'uuid' })
+  member_id: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Column({ type: 'uuid' })
+  quiz_id: string;
 
   //* Relation */
 

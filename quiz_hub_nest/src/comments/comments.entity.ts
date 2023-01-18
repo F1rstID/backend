@@ -1,3 +1,4 @@
+import { IsNotEmpty, IsString } from 'class-validator';
 import { CommentLikeEntity } from 'src/comment-likes/comment-likes.entity';
 import { MemberEntity } from 'src/members/members.entity';
 import { QuizEntity } from 'src/quizzes/quizzes.entity';
@@ -18,6 +19,16 @@ export class CommentEntity extends BaseEntity {
 
   @Column({ type: 'text' })
   comment: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Column({ type: 'uuid' })
+  member_id: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Column({ type: 'uuid' })
+  quiz_id: string;
 
   //* Relation */
 

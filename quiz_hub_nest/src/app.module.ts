@@ -13,6 +13,7 @@ import { TokensModule } from './tokens/tokens.module';
 import { CommentsModule } from './comments/comments.module';
 import { QuizLikesModule } from './quiz-likes/quiz-likes.module';
 import { CommentLikesModule } from './comment-likes/comment-likes.module';
+import { AuthModule } from './auth/auth.module';
 
 const typeOrmModuleOptions = {
   useFactory: async (
@@ -53,6 +54,7 @@ const typeOrmModuleOptions = {
     CommentsModule,
     QuizLikesModule,
     CommentLikesModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
