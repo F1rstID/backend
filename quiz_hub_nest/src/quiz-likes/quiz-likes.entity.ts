@@ -18,25 +18,15 @@ export class QuizLikeEntity extends BaseEntity {
   @Column({ type: 'boolean' })
   like: boolean;
 
-  @IsString()
-  @IsNotEmpty()
-  @Column({ type: 'uuid' })
-  member_id: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @Column({ type: 'uuid' })
-  quiz_id: string;
-
   //* Relation */
 
   //* QuizLike | N : 1 | Quiz
-  @ManyToOne(() => QuizEntity, (quiz) => quiz.quizLikeId)
+  @ManyToOne(() => QuizEntity, (quiz) => quiz.quizLike)
   @JoinColumn({ name: 'quiz_id' })
-  quizEntity: QuizEntity;
+  quiz: QuizEntity;
 
   //* QuizLike | N : 1 | Member
-  @ManyToOne(() => MemberEntity, (member) => member.quizLikeId)
+  @ManyToOne(() => MemberEntity, (member) => member.quizLike)
   @JoinColumn({ name: 'member_id' })
-  memberEntity: MemberEntity;
+  member: MemberEntity;
 }

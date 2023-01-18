@@ -12,8 +12,8 @@ export class QuizLikesService {
 
   async likeEvent(quizId, member_id, like) {
     const quizLikeData = await this.quizLikesRepository.findOneBy({
-      quiz_id: quizId,
-      member_id: member_id,
+      // quiz_id: quizId,
+      // member_id: member_id,
     });
 
     if (quizLikeData) {

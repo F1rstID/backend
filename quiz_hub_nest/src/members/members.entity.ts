@@ -1,3 +1,4 @@
+import { TokenEntity } from './../tokens/tokens.entity';
 import { IsString, IsNotEmpty } from 'class-validator';
 import { QuizEntity } from './../quizzes/quizzes.entity';
 import {
@@ -6,6 +7,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 import { CommentEntity } from 'src/comments/comments.entity';
 import { QuizLikeEntity } from 'src/quiz-likes/quiz-likes.entity';
@@ -36,20 +38,20 @@ export class MemberEntity extends BaseEntity {
   //* Relation */
 
   //* Member | 1 : N | Quiz
-  @OneToMany(() => QuizEntity, (quiz) => quiz.id, {
+  @OneToMany(() => QuizEntity, (quiz) => quiz.member, {
     cascade: true,
   })
-  quizId: QuizEntity[];
+  quiz: QuizEntity[];
 
   //* Member | 1 : N | Comment
-  @OneToMany(() => CommentEntity, (comment) => comment.id)
-  commentId: CommentEntity[];
+  @OneToMany(() => CommentEntity, (comment) => comment.member)
+  comment: CommentEntity[];
 
   //* Member | 1 : N | QuizLike
-  @OneToMany(() => QuizLikeEntity, (quizLike) => quizLike.id)
-  quizLikeId: QuizLikeEntity[];
+  @OneToMany(() => QuizLikeEntity, (quizLike) => quizLike.member)
+  quizLike: QuizLikeEntity[];
 
   //* Member | 1 : N | CommentLike
-  @OneToMany(() => CommentLikeEntity, (commentLike) => commentLike.id)
-  commentLikeId: CommentLikeEntity[];
+  @OneToMany(() => CommentLikeEntity, (commentLike) => commentLike.member)
+  commentLike: CommentLikeEntity[];
 }

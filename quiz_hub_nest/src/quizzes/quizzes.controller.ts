@@ -2,7 +2,7 @@ import { JwtPayload } from './../common/jwt/jwt.payload';
 import { JwtAuthGuard } from './../common/jwt/jwt.guard';
 import { QuizCreateDTO } from './dtos/quiz.create.dto';
 import { QuizzesService } from './quizzes.service';
-import { Controller, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Get } from '@nestjs/common';
 import { jwtPayload } from 'src/common/decorators/jwt.payload.decorator';
 
 @Controller('quiz')
@@ -16,5 +16,10 @@ export class QuizzesController {
     @jwtPayload() payload: JwtPayload,
   ) {
     return this.quizzesService.createQuiz(quizCreateDTO, payload);
+  }
+
+  @Get()
+  async getAllQuiz() {
+    return this.quizzesService.getAllQuiz();
   }
 }

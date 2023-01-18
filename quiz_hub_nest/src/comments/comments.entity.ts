@@ -20,29 +20,19 @@ export class CommentEntity extends BaseEntity {
   @Column({ type: 'text' })
   comment: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @Column({ type: 'uuid' })
-  member_id: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @Column({ type: 'uuid' })
-  quiz_id: string;
-
   //* Relation */
 
   //* Comment | N : 1 | Member
-  @ManyToOne(() => MemberEntity, (member) => member.commentId)
+  @ManyToOne(() => MemberEntity, (member) => member.comment)
   @JoinColumn({ name: 'member_id' })
-  memberEntity: MemberEntity;
+  member: MemberEntity;
 
   //* Comment | N : 1 | Quiz
-  @ManyToOne(() => QuizEntity, (quiz) => quiz.commentId)
+  @ManyToOne(() => QuizEntity, (quiz) => quiz.comment)
   @JoinColumn({ name: 'quiz_id' })
-  quizEntity: QuizEntity;
+  quiz: QuizEntity;
 
   //* Comment | 1 : N | CommentLike
-  @OneToMany(() => CommentLikeEntity, (commentLike) => commentLike.id)
-  commentLikeId: CommentLikeEntity[];
+  @OneToMany(() => CommentLikeEntity, (commentLike) => commentLike.comment)
+  commentLike: CommentLikeEntity[];
 }

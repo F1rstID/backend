@@ -34,26 +34,21 @@ export class QuizEntity extends BaseEntity {
   @Column({ type: 'text' })
   answer: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @Column({ type: 'uuid' })
-  member_id: string;
-
   //* Relation */
 
   //* Quiz | N : 1 | Member
-  @ManyToOne(() => MemberEntity, (member) => member.quizId, {
+  @ManyToOne(() => MemberEntity, (member) => member.quiz, {
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'member_id', referencedColumnName: 'id' })
-  memberEntity: MemberEntity[];
+  @JoinColumn({ name: 'member_id' })
+  member: MemberEntity;
   //
 
   //* Quiz | 1 : N | Comment
-  @OneToMany(() => CommentEntity, (comment) => comment.id)
-  commentId: CommentEntity[];
+  @OneToMany(() => CommentEntity, (comment) => comment.quiz)
+  comment: CommentEntity[];
 
   //* Quiz | 1 : N | QuizLike
-  @OneToMany(() => QuizLikeEntity, (quizLike) => quizLike.id)
-  quizLikeId: QuizLikeEntity[];
+  @OneToMany(() => QuizLikeEntity, (quizLike) => quizLike.quiz)
+  quizLike: QuizLikeEntity[];
 }

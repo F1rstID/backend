@@ -17,15 +17,10 @@ export class TokenEntity extends BaseEntity {
   @Column({ type: 'text' })
   token: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @Column({ type: 'uuid' })
-  member_id: string;
-
   //* Relation */
 
   //* Member | 1 : 1 | Token
   @OneToOne(() => MemberEntity)
   @JoinColumn({ name: 'member_id' })
-  memberEntity: MemberEntity;
+  member: MemberEntity;
 }

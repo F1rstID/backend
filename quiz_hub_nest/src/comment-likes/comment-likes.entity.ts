@@ -18,25 +18,15 @@ export class CommentLikeEntity extends BaseEntity {
   @Column({ type: 'boolean' })
   like: boolean;
 
-  @IsString()
-  @IsNotEmpty()
-  @Column({ type: 'uuid' })
-  member_id: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @Column({ type: 'uuid' })
-  comment_id: string;
-
   //* Relation */
 
   //* QuizLike | N : 1 | Quiz
-  @ManyToOne(() => CommentEntity, (comment) => comment.commentLikeId)
+  @ManyToOne(() => CommentEntity, (comment) => comment.commentLike)
   @JoinColumn({ name: 'comment_id' })
-  commentEntity: CommentEntity;
+  comment: CommentEntity;
 
   //* QuizLike | N : 1 | Member
-  @ManyToOne(() => MemberEntity, (member) => member.commentLikeId)
+  @ManyToOne(() => MemberEntity, (member) => member.commentLike)
   @JoinColumn({ name: 'member_id' })
-  memberEntity: MemberEntity;
+  member: MemberEntity;
 }
