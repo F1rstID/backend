@@ -5,6 +5,9 @@ const indexRouter = require('./routes');
 const cors = require('cors');
 const HttpExceptionFilter = require('./middleware/http.exception.middleware');
 const NotFoundFilter = require('./middleware/page.notfound.middleware');
+const http = require('http');
+const https = require('https')
+const http2 = require('http2')
 
 const app = express();
 
@@ -35,6 +38,8 @@ app.use(HttpExceptionFilter);
 //* 유효하지 않은 URL에 접속을 시도 할경우 404 에러처리를 해줍니다.
 app.use(NotFoundFilter);
 
-app.listen(port, () => {
-  console.log(port, "포트로 서버가 열렸어요!");
-});
+// app.listen(port, () => {
+//   console.log(port, "포트로 서버가 열렸어요!");
+// });
+
+http.createServer(app).listen(3030);
