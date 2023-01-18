@@ -10,7 +10,9 @@ class CommentService {
   };
 
   getAllComments = async (qId) => {
-    return await this.commentRepository.getAllComments(qId);
+    const allComments = await this.commentRepository.getAllComments(qId);
+
+    return allComments;
   };
 
   updateComment = async (cId, comment) => {
