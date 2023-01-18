@@ -2,16 +2,7 @@ import { JwtPayload } from './../common/jwt/jwt.payload';
 import { JwtAuthGuard } from './../common/jwt/jwt.guard';
 import { QuizCreateDTO } from './dtos/quiz.create.dto';
 import { QuizzesService } from './quizzes.service';
-import {
-  Controller,
-  Post,
-  Body,
-  Res,
-  Get,
-  UseGuards,
-  Req,
-} from '@nestjs/common';
-import { Response } from 'express';
+import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { jwtPayload } from 'src/common/decorators/jwt.payload.decorator';
 
 @Controller('quiz')

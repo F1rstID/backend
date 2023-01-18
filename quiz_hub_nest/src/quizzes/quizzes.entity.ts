@@ -15,8 +15,8 @@ import { IsString, IsNotEmpty } from 'class-validator';
 
 @Entity({ name: 'Quiz' })
 export class QuizEntity extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn('increment')
+  id: number;
 
   @IsString()
   @IsNotEmpty({ message: '제목이 공백입니다.' })
