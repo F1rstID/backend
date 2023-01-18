@@ -6,9 +6,9 @@ const cors = require('cors');
 const HttpExceptionFilter = require('./middleware/http.exception.middleware');
 const NotFoundFilter = require('./middleware/page.notfound.middleware');
 const http = require('http');
-const https = require('https')
 const http2 = require('http2')
 const fs = require('fs')
+const http2Express = require('http2-express-bridge')
 
 const app = http2Express(express);
 
