@@ -42,4 +42,4 @@ app.use(NotFoundFilter);
 //   console.log(port, "포트로 서버가 열렸어요!");
 // });
 
-http.createServer(app).listen(3030);
+http.createServer(app).listen(3000);
