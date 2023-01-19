@@ -32,8 +32,8 @@ class CommentController {
   getAllComments = async (req, res, next) => {
     //댓글 조회
     const { qId } = req.params;
-    console.log(qId);
-    const allComments = await this.commentService.getAllComments(qId);
+    const mId = res.locals.mId;
+    const allComments = await this.commentService.getAllComments(qId, mId);
 
     return res.status(200).json({ allComments });
   };
@@ -41,7 +41,7 @@ class CommentController {
   updateComment = async (req, res, next) => {
     //댓글 수정
     const { cId } = req.params;
-    const { mId } = res.locals;
+    const mId = res.locals.mId;
     const { comment } = req.body;
     const updatedComment = await this.commentService.updateComment(
       cId,
@@ -55,14 +55,14 @@ class CommentController {
   deleteComment = async (req, res, next) => {
     //댓글 삭제
     const { cId } = req.params;
-    const { mId } = res.locals;
+    const mId = res.locals.mId;
     const deletedComment = await this.commentService.deleteComment(cId, mId);
 
     return res.sendStatus(204);
   };
 
   commentLikeEvent = async (req, res, next) => {
-    const mId = 1;
+    const mId = res.locals.mId;
 
     const { cId } = req.params;
     const { commentLikeStatus } = req.body;

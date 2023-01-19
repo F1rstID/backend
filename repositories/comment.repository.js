@@ -14,6 +14,14 @@ class CommentRepository {
     const commentData = await this.commentsModel.findByPk(cId);
     return commentData;
   };
+
+  findLikeStatus = async (mId) => {
+    const comments = await this.commentLikesModel.findAll({
+      where: { mId: mId },
+    });
+
+    return comments;
+  };
   //댓글 DB에 생성
   createComment = async (mId, qId, comment) => {
     const createCommentData = await this.commentsModel.create(

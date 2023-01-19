@@ -9,8 +9,30 @@ class CommentService {
     return await this.commentRepository.createComment(mId, qId, comment);
   };
 
-  getAllComments = async (qId) => {
+  getAllComments = async (qId, mId) => {
     const allComments = await this.commentRepository.getAllComments(qId);
+    const likedComment = await this.commentRepository.findLikeStatus(mId);
+
+    for (let i = 0; i < allComments.length; i++) {
+      allComments[i].isLikedComment = false;
+      allComments[i].isDisLikedComment = false;
+    }
+
+    for (let i = 0; i < allComments.length; i++) {
+      for (let j = 0; j < likedComment.length; j++) {
+        if (
+          allComments[i].cId === likedComment[j].cId &&
+          likedComment[j].commentLikeStatus === true
+        ) {
+          allComments[i].isLikedComment = true;
+        } else if (
+          allComments[i].cId === likedComment[j].cId &&
+          likedComment[j].commentLikeStatus === false
+        ) {
+          allComments[i].isDisLikedComment = true;
+        }
+      }
+    }
 
     return allComments;
   };
