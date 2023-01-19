@@ -18,9 +18,25 @@ class QuizzesService {
   };
 
   getQuiz = async (qId, mId) => {
+    const findLikeData = await this.quizzesRepository.findLike(qId, mId)
     const quizData = await this.quizzesRepository.getQuiz(qId);
 
-    return quizData;
+    //* 현재 로그인 되어있는 Member가 현재 게시글에 좋아요, 싫어요를 누르지 않은 상태.
+    if (!findLikeData) {
+      quizData[0].isLiked = false
+      quizData[0].isDisliked = false
+      console.log(quizData[0])
+
+      return quizData[0];
+    }
+
+    //* 좋아요를 누른 상태면 ( likeStatus = true ) isLiked = true 아니면 false
+    quizData[0].isLiked = findLikeData.likeStatus ? true : false
+    //* 싫어요를 누른 상태면 ( likeStatus = false ) isDisliked = true 아니면 false
+    quizData[0].isDisliked = findLikeData.likeStatus ? false : true
+
+    console.log(quizData)
+    return quizData[0];
   };
 
   updateQuiz = async (qId, mId, title, content, answer) => {
