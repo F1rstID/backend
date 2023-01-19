@@ -43,7 +43,7 @@ class QuizzesController {
     const { mId } = res.locals;
     const quiz = await this.quizzesService.getQuiz(quizId, mId);
     //* 성공시 200(OK)
-    return res.status(200).json(quiz[0]);
+    return res.status(200).json(quiz);
   };
 
   updateQuiz = async (req, res) => {
