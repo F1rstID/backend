@@ -82,7 +82,7 @@ class QuizzesRepository {
     const [quizData, metaData] = await sequelize.query(
       `select Quizzes.qId, Quizzes.title, Quizzes.content, Members.nickname,
     count(case when likeStatus = 1 then 1 end) as 'like',
-    count(case when likeStatus = 0 then 1 end) as 'unlike'
+    count(case when likeStatus = 0 then 1 end) as 'dislike'
     from Quizzes
     left join Members
     on Quizzes.mId = Members.mId
