@@ -1,6 +1,6 @@
 const QuizzesRepository = require('../repositories/quizzes.repository');
 const { Quiz, Member, QuizLike } = require('../models');
-const { NotFound } = require('../helper/http.exception.helper');
+const { NotFound, Unauthorized } = require('../helper/http.exception.helper');
 class QuizzesService {
   quizzesRepository = new QuizzesRepository(Quiz, Member, QuizLike);
 
@@ -13,11 +13,20 @@ class QuizzesService {
     return await this.quizzesRepository.getAllQuizzes();
   };
 
-  getQuiz = async (qId) => {
-    return await this.quizzesRepository.getQuiz(qId);
+  getQuiz = async (qId, mId) => {
+    const quizData = await this.quizzesRepository.getQuiz(qId);
+
+    return quizData
   };
 
-  updateQuiz = async (qId, title, content, answer) => {
+  updateQuiz = async (qId, mId, title, content, answer) => {
+    const quizData = await this.quizzesRepository.findMemberIdByQuizId(qId);
+
+    if (!quizData) throw new NotFound('');
+    const QuizmId = quizData.mId;
+
+    if (mId !== QuizmId) throw new Unauthorized('')
+
     const updateQuizData = await this.quizzesRepository.updateQuiz(
       qId,
       title,
@@ -30,11 +39,19 @@ class QuizzesService {
     //* 1개 수정시 : [ 1 ] 을 반환한다.
     //* 0개 수정시 : [ 0 ] 을 반환한다.
     if (updateQuizData < 1) {
-      throw new NotFound('게시글이 정상적으로 수정되지 않았습니다.');
+      throw new NotFound('');
     }
   };
 
-  deleteQuiz = async (qId) => {
+  deleteQuiz = async (qId, mId) => {
+    const quizData = await this.quizzesRepository.findMemberIdByQuizId(qId);
+
+    if (!quizData) throw new NotFound('');
+
+    const QuizmId = quizData.mId;
+
+    if (mId !== QuizmId) throw new Unauthorized('')
+
     const deleteQuizData = await this.quizzesRepository.deleteQuiz(qId);
 
     //* DB에 없는 데이터에 삭제 명령을 내린 상황. 404
@@ -42,7 +59,7 @@ class QuizzesService {
     //* 1개 삭제시 : [ 1 ] 을 반환한다.
     //* 0개 삭제시 : [ 0 ] 을 반환한다.
     if (deleteQuizData < 1) {
-      throw new NotFound('게시글이 정상적으로 삭제되지 않았습니다.');
+      throw new NotFound('');
     }
   };
 
@@ -50,7 +67,6 @@ class QuizzesService {
     //* 좋아요, 싫어요 요청 받을 경우 qId와 mId를 이용하여
     //* qlike( quizLike 테이블의 정보.)를 받아온다.
     const qlike = await this.quizzesRepository.findLike(qId, mId);
-    // console.log(likeStatus, qlike.likeStatus);
 
     //* 분기 1.
     //* qlike를 정상적으로 받아온 경우.
@@ -68,7 +84,6 @@ class QuizzesService {
       //* 분기1 - 2. qlike.likestatus !== likestatus
       //* 좋아요를 이미 누른 상태에서 싫어요를 누른 상황이거나 그 반대인 상황 이기떄문에
       //* 해당 데이터를 likestatus로 update 한다.
-      console.log(likeStatus);
       return await this.quizzesRepository.updateLike(qlike.qLId, likeStatus);
     }
     //* 분기 2.
@@ -77,6 +92,17 @@ class QuizzesService {
     //* 해당 데이터를 create한다.
     return await this.quizzesRepository.createLike(qId, mId, likeStatus);
   };
+
+  submitAnswer = async (qId, answer) => {
+    const answerData = await this.quizzesRepository.getQuizAnswer(qId)
+    console.log(answerData)
+    if (!answerData) throw new NotFound('')
+
+    const correct = answerData.answer === answer ? true : false
+
+    return correct
+
+  }
 }
 
 module.exports = QuizzesService;

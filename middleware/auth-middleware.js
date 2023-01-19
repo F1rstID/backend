@@ -47,7 +47,6 @@ module.exports = async (req, res, next) => {
         const newaccess_token = jwt.sign({ mId }, process.env.SECRETKEY, {
           expiresIn: '1d',
         });
-        console.log(newaccess_token, 'newaccess_token 확인');
         res.cookies('accesToken', newaccess_token);
 
         return res.status(201).json({
@@ -70,7 +69,6 @@ module.exports = async (req, res, next) => {
         const newRefreshToken = jwt.sign({ mId }, process.env.SECRETKEY, {
           expiresIn: '21d',
         });
-        console.log(newRefreshToken, 'newRefreshToken 확인');
 
         await Member.update(
           { refreshToken: newRefreshToken },
@@ -92,7 +90,6 @@ module.exports = async (req, res, next) => {
           attributes: ['mId', 'memberId'],
         }).then((member) => {
           res.locals.member = member;
-          console.log(member)
           next();
         });
       }

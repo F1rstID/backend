@@ -39,14 +39,15 @@ class QuizzesController {
 
   getQuiz = async (req, res) => {
     //* 특정한 한개의 게시글 조회.
-    const { qId } = req.params;
-    const quiz = await this.quizzesService.getQuiz(qId);
+    const { quizId } = req.params;
+    const { mId } = res.locals
+    const quiz = await this.quizzesService.getQuiz(quizId, mId);
     //* 성공시 200(OK)
     return res.status(200).json(quiz[0]);
   };
 
   updateQuiz = async (req, res) => {
-    const { qId } = req.params;
+    const { quizId } = req.params;
 
     //* req.body의 타입이 quizSchema의 타입과 일치 하는지 검증한다.
     const resultSchema = quizSchema.validate(req.body);
@@ -58,16 +59,20 @@ class QuizzesController {
 
     const { title, content, answer } = req.body;
 
-    await this.quizzesService.updateQuiz(qId, title, content, answer);
+    const { mId } = res.locals
+
+    await this.quizzesService.updateQuiz(quizId, mId, title, content, answer);
 
     //* 201(Created)
     res.sendStatus(201);
   };
 
   deleteQuiz = async (req, res) => {
-    const { qId } = req.params;
+    const { quizId } = req.params;
 
-    await this.quizzesService.deleteQuiz(qId);
+    const { mId } = res.locals
+
+    await this.quizzesService.deleteQuiz(quizId, mId);
 
     //* 201(Created)
     res.sendStatus(204);
@@ -75,14 +80,29 @@ class QuizzesController {
 
   likeEvent = async (req, res) => {
     const mId = res.locals.mId;
-    const { qId } = req.params;
+    const { quizId } = req.params;
     const { likeStatus } = req.body;
 
     //* 잘찍힘
 
-    await this.quizzesService.likeEvent(qId, mId, likeStatus);
+    await this.quizzesService.likeEvent(quizId, mId, likeStatus);
 
     return res.sendStatus(201);
+  };
+
+  submitAnswer = async (req, res) => {
+    const answerType = Joi.object({
+      answer: Joi.string().required()
+    })
+    const result = answerType.validate(req.body);
+    const { answer } = req.body
+    const { quizId } = req.params
+    console.log(answer, quizId)
+    if (result.error) throw new BadRequestError('')
+
+    const correct = await this.quizzesService.submitAnswer(quizId, answer)
+
+    return res.status(200).json({ correct })
   };
 }
 
