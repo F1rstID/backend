@@ -1,6 +1,10 @@
 const QuizzesRepository = require('../repositories/quizzes.repository');
 const { Quiz, Member, QuizLike } = require('../models');
-const { NotFound, Unauthorized, Forbidden } = require('../helper/http.exception.helper');
+const {
+  NotFound,
+  Unauthorized,
+  Forbidden,
+} = require('../helper/http.exception.helper');
 class QuizzesService {
   quizzesRepository = new QuizzesRepository(Quiz, Member, QuizLike);
 
@@ -25,11 +29,7 @@ class QuizzesService {
     if (!quizData) throw new NotFound('');
     const QuizmId = quizData.mId;
 
-<<<<<<< Updated upstream
-    if (mId !== QuizmId) throw new Forbidden('')
-=======
-    if (mId !== QuizmId) throw new Unauthorized('');
->>>>>>> Stashed changes
+    if (mId !== QuizmId) throw new Forbidden('');
 
     const updateQuizData = await this.quizzesRepository.updateQuiz(
       qId,
@@ -54,11 +54,7 @@ class QuizzesService {
 
     const QuizmId = quizData.mId;
 
-<<<<<<< Updated upstream
-    if (mId !== QuizmId) throw new Forbidden('')
-=======
-    if (mId !== QuizmId) throw new Unauthorized('');
->>>>>>> Stashed changes
+    if (mId !== QuizmId) throw new Forbidden('');
 
     const deleteQuizData = await this.quizzesRepository.deleteQuiz(qId);
 
