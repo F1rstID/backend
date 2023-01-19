@@ -1,6 +1,6 @@
 const CommentRepository = require('../repositories/comment.repository');
 const { Comment, Quiz, Member, CommentLike } = require('../models');
-const { NotFound } = require('../helper/http.exception.helper');
+const { NotFound, Forbidden } = require('../helper/http.exception.helper');
 
 class CommentService {
   commentRepository = new CommentRepository(Comment, Quiz, Member, CommentLike);
@@ -15,7 +15,13 @@ class CommentService {
     return allComments;
   };
 
-  updateComment = async (cId, comment) => {
+  updateComment = async (cId, comment, mId) => {
+    const commentData = await this.commentRepository.findComment(cId);
+
+    if (!commentData) throw new NotFound('');
+
+    if (mId !== commentData.mId) throw new Forbidden('');
+
     const updateCommentData = await this.commentRepository.updateComment(
       cId,
       comment
@@ -26,7 +32,13 @@ class CommentService {
     }
   };
 
-  deleteComment = async (cId) => {
+  deleteComment = async (cId, mId) => {
+    const commentData = await this.commentRepository.findComment(cId);
+
+    if (!commentData) throw new NotFound('');
+
+    if (mId !== commentData.mId) throw new Forbidden('');
+
     const deleteCommentData = await this.commentRepository.deleteComment(cId);
 
     if (deleteCommentData < 1) {

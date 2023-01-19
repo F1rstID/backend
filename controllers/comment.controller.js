@@ -32,7 +32,7 @@ class CommentController {
   getAllComments = async (req, res, next) => {
     //댓글 조회
     const { qId } = req.params;
-    console.log(qId)
+    console.log(qId);
     const allComments = await this.commentService.getAllComments(qId);
 
     return res.status(200).json({ allComments });
@@ -41,10 +41,12 @@ class CommentController {
   updateComment = async (req, res, next) => {
     //댓글 수정
     const { cId } = req.params;
+    const { mId } = res.locals;
     const { comment } = req.body;
     const updatedComment = await this.commentService.updateComment(
       cId,
-      comment
+      comment,
+      mId
     );
 
     return res.sendStatus(201);
@@ -53,7 +55,8 @@ class CommentController {
   deleteComment = async (req, res, next) => {
     //댓글 삭제
     const { cId } = req.params;
-    const deletedComment = await this.commentService.deleteComment(cId);
+    const { mId } = res.locals;
+    const deletedComment = await this.commentService.deleteComment(cId, mId);
 
     return res.sendStatus(204);
   };

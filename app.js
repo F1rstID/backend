@@ -10,19 +10,19 @@ const http2 = require('http2');
 const fs = require('fs');
 const http2Express = require('http2-express-bridge');
 
-const app = http2Express(express);
-// const app = express();
+// const app = http2Express(express);
+const app = express();
 
 //* http2 설정을 위한 Option 설정
-const options = {
-  ca: fs.readFileSync('/etc/letsencrypt/live/f1rstweb.shop/fullchain.pem'),
-  key: fs.readFileSync('/etc/letsencrypt/live/f1rstweb.shop/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/f1rstweb.shop/cert.pem'),
-  allowHTTP1: true,
-};
+// const options = {
+//   ca: fs.readFileSync('/etc/letsencrypt/live/f1rstweb.shop/fullchain.pem'),
+//   key: fs.readFileSync('/etc/letsencrypt/live/f1rstweb.shop/privkey.pem'),
+//   cert: fs.readFileSync('/etc/letsencrypt/live/f1rstweb.shop/cert.pem'),
+//   allowHTTP1: true,
+// };
 
 //* 인증서 발급을 위한 설정
-app.use(express.static('public'));
+// app.use(express.static('public'));
 
 //* env 없을시 3000 포트로 설정.
 const port = process.env.PORT || 3000;
@@ -59,4 +59,4 @@ app.use(NotFoundFilter);
 
 http.createServer(app).listen(3000);
 
-http2.createSecureServer(options, app).listen(4000, () => {});
+// http2.createSecureServer(options, app).listen(4000, () => {});
