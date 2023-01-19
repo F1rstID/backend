@@ -19,9 +19,9 @@ class QuizzesRepository {
   };
 
   findMemberIdByQuizId = async (qId) => {
-    const quizData = await this.quizzesModel.findByPk(qId)
-    return quizData
-  }
+    const quizData = await this.quizzesModel.findByPk(qId);
+    return quizData;
+  };
 
   //* 퀴즈 데이터 DB에 생성하기.
   createQuiz = async (mId, title, content, answer) => {
@@ -71,6 +71,7 @@ class QuizzesRepository {
     left join Members
     on Quizzes.mId = Members.mId
     group by Quizzes.qId
+    order by Quizzes.qId desc
     `
     );
     return allQuizzesData;
@@ -104,10 +105,10 @@ class QuizzesRepository {
   };
 
   getQuizAnswer = async (qId) => {
-    const quizData = await this.quizzesModel.findByPk(qId)
+    const quizData = await this.quizzesModel.findByPk(qId);
 
-    return quizData
-  }
+    return quizData;
+  };
 
   findLike = async (qId, mId) => {
     return await this.quizLikesModel.findOne({ where: { qId, mId } });
@@ -132,7 +133,6 @@ class QuizzesRepository {
     });
     return createLikeData;
   };
-
 }
 
 module.exports = QuizzesRepository;

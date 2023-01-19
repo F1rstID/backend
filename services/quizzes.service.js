@@ -16,7 +16,7 @@ class QuizzesService {
   getQuiz = async (qId, mId) => {
     const quizData = await this.quizzesRepository.getQuiz(qId);
 
-    return quizData
+    return quizData;
   };
 
   updateQuiz = async (qId, mId, title, content, answer) => {
@@ -25,7 +25,11 @@ class QuizzesService {
     if (!quizData) throw new NotFound('');
     const QuizmId = quizData.mId;
 
+<<<<<<< Updated upstream
     if (mId !== QuizmId) throw new Forbidden('')
+=======
+    if (mId !== QuizmId) throw new Unauthorized('');
+>>>>>>> Stashed changes
 
     const updateQuizData = await this.quizzesRepository.updateQuiz(
       qId,
@@ -50,7 +54,11 @@ class QuizzesService {
 
     const QuizmId = quizData.mId;
 
+<<<<<<< Updated upstream
     if (mId !== QuizmId) throw new Forbidden('')
+=======
+    if (mId !== QuizmId) throw new Unauthorized('');
+>>>>>>> Stashed changes
 
     const deleteQuizData = await this.quizzesRepository.deleteQuiz(qId);
 
@@ -94,15 +102,14 @@ class QuizzesService {
   };
 
   submitAnswer = async (qId, answer) => {
-    const answerData = await this.quizzesRepository.getQuizAnswer(qId)
-    console.log(answerData)
-    if (!answerData) throw new NotFound('')
+    const answerData = await this.quizzesRepository.getQuizAnswer(qId);
+    console.log(answerData);
+    if (!answerData) throw new NotFound('');
 
-    const correct = answerData.answer === answer ? true : false
+    const correct = answerData.answer === answer ? true : false;
 
-    return correct
-
-  }
+    return correct;
+  };
 }
 
 module.exports = QuizzesService;
