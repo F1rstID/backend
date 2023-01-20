@@ -26,13 +26,16 @@ class CommentController {
     //* 댓글 작성.
     await this.commentService.createComment(mId, qId, comment);
 
-    return res.sendStatus(201);
+    const allComments = await this.commentService.getAllComments(qId, mId);
+
+    return res.status(200).json({ allComments });
   };
 
   getAllComments = async (req, res, next) => {
     //댓글 조회
     const { qId } = req.params;
-    const allComments = await this.commentService.getAllComments(qId);
+    const mId = res.locals.mId;
+    const allComments = await this.commentService.getAllComments(qId, mId);
 
     return res.status(200).json({ allComments });
   };
@@ -40,10 +43,12 @@ class CommentController {
   updateComment = async (req, res, next) => {
     //댓글 수정
     const { cId } = req.params;
+    const mId = res.locals.mId;
     const { comment } = req.body;
     const updatedComment = await this.commentService.updateComment(
       cId,
-      comment
+      comment,
+      mId
     );
 
     return res.sendStatus(201);
@@ -52,13 +57,14 @@ class CommentController {
   deleteComment = async (req, res, next) => {
     //댓글 삭제
     const { cId } = req.params;
-    const deletedComment = await this.commentService.deleteComment(cId);
+    const mId = res.locals.mId;
+    const deletedComment = await this.commentService.deleteComment(cId, mId);
 
     return res.sendStatus(204);
   };
 
   commentLikeEvent = async (req, res, next) => {
-    const mId = 1;
+    const mId = res.locals.mId;
 
     const { cId } = req.params;
     const { commentLikeStatus } = req.body;

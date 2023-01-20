@@ -2,15 +2,23 @@ const { Member } = require('../models');
 
 class MembersRepository {
   // memeber 가입
-  createMember = async (memberId, password, nickname) => {
+  createMember = async (memberId, hashedPassword, nickname) => {
+    const password = hashedPassword;
     const createMember = await Member.create({ memberId, password, nickname });
-  
+
     return createMember;
   };
 
   // member 가입 시 닉네임 중복확인
   findOneNickname = async (nickname) => {
     const findOneId = await Member.findOne({ where: { nickname } });
+
+    return findOneId;
+  };
+
+  // member 가입 시 아이디 중복확인
+  findOneMemberId = async (memberId) => {
+    const findOneId = await Member.findOne({ where: { memberId } });
 
     return findOneId;
   };
@@ -22,11 +30,11 @@ class MembersRepository {
     return findOneId;
   };
 
-  findOnePw = async (password) => {
-    const findOnePw = await Member.findOne({ where: { password } });
+  // findOnePw = async (password) => {
+  //   const findOnePw = await Member.findOne({ where: { password } });
 
-    return findOnePw;
-  };
+  //   return findOnePw;
+  // };
 
   // 이미 로그인된 memeber 확인
   findOneMember = async (memberId) => {

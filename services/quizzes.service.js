@@ -1,6 +1,10 @@
 const QuizzesRepository = require('../repositories/quizzes.repository');
 const { Quiz, Member, QuizLike } = require('../models');
-const { NotFound, Unauthorized } = require('../helper/http.exception.helper');
+const {
+  NotFound,
+  Unauthorized,
+  Forbidden,
+} = require('../helper/http.exception.helper');
 class QuizzesService {
   quizzesRepository = new QuizzesRepository(Quiz, Member, QuizLike);
 
@@ -14,9 +18,25 @@ class QuizzesService {
   };
 
   getQuiz = async (qId, mId) => {
+    const findLikeData = await this.quizzesRepository.findLike(qId, mId)
     const quizData = await this.quizzesRepository.getQuiz(qId);
 
-    return quizData
+    //* 현재 로그인 되어있는 Member가 현재 게시글에 좋아요, 싫어요를 누르지 않은 상태.
+    if (!findLikeData) {
+      quizData[0].isLiked = false
+      quizData[0].isDisliked = false
+      console.log(quizData[0])
+
+      return quizData[0];
+    }
+
+    //* 좋아요를 누른 상태면 ( likeStatus = true ) isLiked = true 아니면 false
+    quizData[0].isLiked = findLikeData.likeStatus ? true : false
+    //* 싫어요를 누른 상태면 ( likeStatus = false ) isDisliked = true 아니면 false
+    quizData[0].isDisliked = findLikeData.likeStatus ? false : true
+
+    console.log(quizData)
+    return quizData[0];
   };
 
   updateQuiz = async (qId, mId, title, content, answer) => {
@@ -25,7 +45,7 @@ class QuizzesService {
     if (!quizData) throw new NotFound('');
     const QuizmId = quizData.mId;
 
-    if (mId !== QuizmId) throw new Unauthorized('')
+    if (mId !== QuizmId) throw new Forbidden('');
 
     const updateQuizData = await this.quizzesRepository.updateQuiz(
       qId,
@@ -50,7 +70,7 @@ class QuizzesService {
 
     const QuizmId = quizData.mId;
 
-    if (mId !== QuizmId) throw new Unauthorized('')
+    if (mId !== QuizmId) throw new Forbidden('');
 
     const deleteQuizData = await this.quizzesRepository.deleteQuiz(qId);
 
@@ -94,15 +114,14 @@ class QuizzesService {
   };
 
   submitAnswer = async (qId, answer) => {
-    const answerData = await this.quizzesRepository.getQuizAnswer(qId)
-    console.log(answerData)
-    if (!answerData) throw new NotFound('')
+    const answerData = await this.quizzesRepository.getQuizAnswer(qId);
+    console.log(answerData);
+    if (!answerData) throw new NotFound('');
 
-    const correct = answerData.answer === answer ? true : false
+    const correct = answerData.answer === answer ? true : false;
 
-    return correct
-
-  }
+    return correct;
+  };
 }
 
 module.exports = QuizzesService;

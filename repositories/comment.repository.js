@@ -10,6 +10,18 @@ class CommentRepository {
     this.commentLikesModel = CommentLikesModel;
   }
 
+  findComment = async (cId) => {
+    const commentData = await this.commentsModel.findByPk(cId);
+    return commentData;
+  };
+
+  findLikeStatus = async (mId) => {
+    const comments = await this.commentLikesModel.findAll({
+      where: { mId: mId },
+    });
+
+    return comments;
+  };
   //댓글 DB에 생성
   createComment = async (mId, qId, comment) => {
     const createCommentData = await this.commentsModel.create(
@@ -21,23 +33,21 @@ class CommentRepository {
   };
 
   getAllComments = async (qId) => {
-    try {
-      const [commentData, metaData] = await sequelize.query(
-        `select Comments.qId, Comments.cId, Members.nickname, Comments.comment, 
-        count(case when commentLikeStatus = 1 then 1 end) as 'likes',
-        count(case when commentLikeStatus = 0 then 1 end) as 'dislikes'
-        from Comments
-        left join Members
-        on Comments.mId = Members.mId
-        left join CommentLikes
-        on Comments.cId = CommentLikes.cId
-        `
-      );
-      console.log(commentData);
-      return commentData;
-    } catch (err) {
-      console.log(err);
-    }
+    const [allCommentsData, metaData] = await sequelize.query(
+      `select Comments.cId, Comments.qId, Members.nickname, Comments.comment,
+      count(case when commentLikeStatus = 1 then 1 end) as 'likes',
+      count(case when commentLikeStatus = 0 then 1 end) as 'dislikes'
+      from Comments
+      left join CommentLikes
+      on Comments.cId = CommentLikes.cId
+      left join Members
+      on Comments.mId = Members.mId
+      where Comments.qId = ${qId}
+      group by Comments.cId
+      order by Comments.cId desc`
+    );
+
+    return allCommentsData;
   };
 
   updateComment = async (cId, comment) => {

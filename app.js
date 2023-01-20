@@ -6,11 +6,12 @@ const cors = require('cors');
 const HttpExceptionFilter = require('./middleware/http.exception.middleware');
 const NotFoundFilter = require('./middleware/page.notfound.middleware');
 const http = require('http');
-const http2 = require('http2')
-const fs = require('fs')
-const http2Express = require('http2-express-bridge')
+const http2 = require('http2');
+const fs = require('fs');
+const http2Express = require('http2-express-bridge');
 
 const app = http2Express(express);
+// const app = express();
 
 //* http2 설정을 위한 Option 설정
 const options = {
@@ -21,20 +22,23 @@ const options = {
 };
 
 //* 인증서 발급을 위한 설정
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 //* env 없을시 3000 포트로 설정.
 const port = process.env.PORT || 3000;
+const http2Port = process.env.HTTP2_PORT || 4000;
 
 //* Middleware
 app.use(express.json());
 app.use(cookieParesr());
 
 //* CORS 설정.
-app.use(cors({
-  exposedHeaders: ['Authorization'],
-  credential: 'true'
-}));
+app.use(
+  cors({
+    exposedHeaders: ['Authorization'],
+    credential: 'true',
+  })
+);
 
 //* ./routes/index.js 연결
 app.use('/', indexRouter);
@@ -54,8 +58,6 @@ app.use(NotFoundFilter);
 //   console.log(port, "포트로 서버가 열렸어요!");
 // });
 
-http.createServer(app).listen(3000);
+http.createServer(app).listen(port);
 
-http2.createSecureServer(options, app).listen(4000, () => {
-
-})
+http2.createSecureServer(options, app).listen(http2Port, () => { });

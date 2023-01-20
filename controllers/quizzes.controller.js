@@ -40,10 +40,10 @@ class QuizzesController {
   getQuiz = async (req, res) => {
     //* 특정한 한개의 게시글 조회.
     const { quizId } = req.params;
-    const { mId } = res.locals
+    const { mId } = res.locals;
     const quiz = await this.quizzesService.getQuiz(quizId, mId);
     //* 성공시 200(OK)
-    return res.status(200).json(quiz[0]);
+    return res.status(200).json(quiz);
   };
 
   updateQuiz = async (req, res) => {
@@ -59,7 +59,7 @@ class QuizzesController {
 
     const { title, content, answer } = req.body;
 
-    const { mId } = res.locals
+    const { mId } = res.locals;
 
     await this.quizzesService.updateQuiz(quizId, mId, title, content, answer);
 
@@ -70,7 +70,7 @@ class QuizzesController {
   deleteQuiz = async (req, res) => {
     const { quizId } = req.params;
 
-    const { mId } = res.locals
+    const { mId } = res.locals;
 
     await this.quizzesService.deleteQuiz(quizId, mId);
 
@@ -92,17 +92,17 @@ class QuizzesController {
 
   submitAnswer = async (req, res) => {
     const answerType = Joi.object({
-      answer: Joi.string().required()
-    })
+      answer: Joi.string().required(),
+    });
     const result = answerType.validate(req.body);
-    const { answer } = req.body
-    const { quizId } = req.params
-    console.log(answer, quizId)
-    if (result.error) throw new BadRequestError('')
+    const { answer } = req.body;
+    const { quizId } = req.params;
+    console.log(answer, quizId);
+    if (result.error) throw new BadRequestError('');
 
-    const correct = await this.quizzesService.submitAnswer(quizId, answer)
+    const correct = await this.quizzesService.submitAnswer(quizId, answer);
 
-    return res.status(200).json({ correct })
+    return res.status(200).json({ correct });
   };
 }
 
