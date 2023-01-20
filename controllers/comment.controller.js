@@ -26,7 +26,9 @@ class CommentController {
     //* 댓글 작성.
     await this.commentService.createComment(mId, qId, comment);
 
-    return res.sendStatus(201);
+    const allComments = await this.commentService.getAllComments(qId, mId);
+
+    return res.status(200).json({ allComments });
   };
 
   getAllComments = async (req, res, next) => {
