@@ -13,7 +13,14 @@ class MembersService {
     const findNickname = await this.membersRepository.findOneNickname(nickname);
 
     if (findNickname)
-      throw new Error(
+      throw new ValidationError(
+        '회원 가입에 실패했습니다. 아이디/닉네임 중복체크를 확인해주세요.'
+      );
+
+    const findMemberId = await this.membersRepository.findOneMemberId(memberId);
+
+    if (findMemberId)
+      throw new ValidationError(
         '회원 가입에 실패했습니다. 아이디/닉네임 중복체크를 확인해주세요.'
       );
 

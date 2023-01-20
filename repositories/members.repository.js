@@ -16,6 +16,13 @@ class MembersRepository {
     return findOneId;
   };
 
+  // member 가입 시 아이디 중복확인
+  findOneMemberId = async (memberId) => {
+    const findOneId = await Member.findOne({ where: { memberId } });
+
+    return findOneId;
+  };
+
   // memberId 중복확인
   findOneId = async (memberId) => {
     const findOneId = await Member.findOne({ where: { memberId } });
