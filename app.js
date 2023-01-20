@@ -35,6 +35,7 @@ app.use(cookieParesr());
 //* CORS 설정.
 app.use(
   cors({
+    origin: 'https://frontrepository.vercel.app/',
     exposedHeaders: ['Authorization'],
     credential: 'true',
   })
