@@ -26,6 +26,24 @@ class NotFound extends Error {
     this.name = 'Forbidden';
   }
 }
+//* 409
+class InvalidParamsError extends Error {
+  constructor(message, status) {
+    super(message);
+    this.status = status || 409;
+    this.name = 'InvalidParamsError';
+    if (!message) this.message = '요청한 데이터 형식이 올바르지 않습니다.';
+  }
+}
+
+class ValidationError extends Error {
+  constructor(message, status) {
+    super(message);
+    this.status = status || 409;
+    this.name = 'ValidationError';
+  }
+}
+
 //* 412
 class PreconditionFailed extends Error {
   constructor(message) {
@@ -42,5 +60,5 @@ class InternalServerError extends Error {
 }
 
 module.exports = {
-  BadRequestError, Unauthorized, Forbidden, NotFound, PreconditionFailed, InternalServerError,
+  BadRequestError, Unauthorized, Forbidden, NotFound, PreconditionFailed, InternalServerError,InvalidParamsError, ValidationError
 };
