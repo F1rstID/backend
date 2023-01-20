@@ -2,9 +2,10 @@ const { Member } = require('../models');
 
 class MembersRepository {
   // memeber 가입
-  createMember = async (memberId, password, nickname) => {
+  createMember = async (memberId, hashedPassword, nickname) => {
+    const password = hashedPassword;
     const createMember = await Member.create({ memberId, password, nickname });
-  
+
     return createMember;
   };
 
@@ -22,11 +23,11 @@ class MembersRepository {
     return findOneId;
   };
 
-  findOnePw = async (password) => {
-    const findOnePw = await Member.findOne({ where: { password } });
+  // findOnePw = async (password) => {
+  //   const findOnePw = await Member.findOne({ where: { password } });
 
-    return findOnePw;
-  };
+  //   return findOnePw;
+  // };
 
   // 이미 로그인된 memeber 확인
   findOneMember = async (memberId) => {
